@@ -167,6 +167,11 @@ function setLanguage(lang) {
 
     // Update HTML lang attribute
     document.documentElement.setAttribute('lang', lang);
+
+    // Update page title
+    document.title = lang === 'hr'
+        ? 'IVF Dnevnik – Vaš osobni asistent za praćenje IVF postupka'
+        : 'IVF Diary – Your personal assistant for tracking IVF treatment';
 }
 
 // Initialize language on page load

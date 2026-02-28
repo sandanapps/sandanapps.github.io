@@ -223,6 +223,9 @@
             document.querySelectorAll('.lang-toggle button').forEach((btn, i) => {
                 btn.classList.toggle('active', (lang === 'hr' && i === 0) || (lang === 'en' && i === 1));
             });
+            document.title = lang === 'hr'
+                ? 'Uvjeti korištenja – IVF Dnevnik'
+                : 'Terms of Use – IVF Diary';
         }
 
         // Auto-apply language from main site
