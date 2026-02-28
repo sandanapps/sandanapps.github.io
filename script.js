@@ -134,7 +134,7 @@ const translations = {
     }
 };
 
-let currentLanguage = 'hr';
+let currentLanguage = 'en';
 
 function setLanguage(lang) {
     currentLanguage = lang;
@@ -171,7 +171,7 @@ function setLanguage(lang) {
 
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', () => {
-    const savedLanguage = localStorage.getItem('language') || 'hr';
+    const savedLanguage = localStorage.getItem('language') || 'en';
     setLanguage(savedLanguage);
 
     // Add click event to language toggle button
