@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy – PogoDex</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --sky-500: #0EA5E9;
+            --sky-600: #0284C7;
+            --sky-800: #075985;
+            --surface-bg: #EFF6FF;
+            --silver-200: #E2E8F0;
+            --text:  #1E293B;
+            --muted: #64748B;
+            --radius: 12px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--surface-bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        nav {
+            background: #fff;
+            border-bottom: 1px solid var(--silver-200);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-inner {
+            max-width: 800px; margin: 0 auto; padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 56px;
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-weight: 700; font-size: 1rem;
+            color: var(--sky-600); text-decoration: none;
+        }
+        .nav-logo img {
+            width: 28px; height: 28px;
+            border-radius: 7px;
+            flex-shrink: 0;
+            display: block;
+        }
+        .nav-back {
+            font-size: .875rem; color: var(--muted);
+            text-decoration: none; transition: color .15s;
+        }
+        .nav-back:hover { color: var(--sky-600); }
+
+        /* Hero */
+        .page-hero {
+            background: linear-gradient(135deg, var(--sky-800), var(--sky-600));
+            color: #fff; padding: 48px 24px 56px;
+            text-align: center;
+        }
+        .page-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .page-hero p  { font-size: .95rem; opacity: .8; }
+
+        /* Content */
+        .content {
+            max-width: 800px; margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+        .last-updated {
+            display: inline-block;
+            background: rgba(14,165,233,.1); color: var(--sky-600);
+            font-size: .78rem; font-weight: 600; letter-spacing: .08em;
+            text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
+            margin-bottom: 36px;
+        }
+        section { margin-bottom: 40px; }
+        h2 {
+            font-size: 1.15rem; font-weight: 700;
+            color: var(--sky-700, var(--sky-600));
+            margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 2px solid var(--silver-200);
+        }
+        p { margin-bottom: 12px; font-size: .95rem; color: var(--text); }
+        ul {
+            margin: 8px 0 12px 20px;
+            font-size: .95rem;
+        }
+        ul li { margin-bottom: 6px; }
+        a { color: var(--sky-600); }
+        .highlight-box {
+            background: #fff; border: 1px solid var(--silver-200);
+            border-left: 4px solid var(--sky-500);
+            border-radius: var(--radius); padding: 16px 20px;
+            margin: 16px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-size: .9rem; }
+
+        /* Footer */
+        footer {
+            background: var(--sky-800); color: rgba(255,255,255,.6);
+            padding: 32px 24px; text-align: center; font-size: .8rem; line-height: 1.7;
+        }
+        footer a { color: rgba(255,255,255,.7); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+            <img src="icon.svg" alt="PogoDex icon" />
+            PogoDex
+        </a>
+        <a class="nav-back" href="index.html">← Back to home</a>
+    </div>
+</nav>
+
+<div class="page-hero">
+    <h1>Privacy Policy</h1>
+    <p>How PogoDex handles your data</p>
+</div>
+
+<div class="content">
+    <span class="last-updated">Last updated: March 2026</span>
+
+    <div class="highlight-box">
+        <p><strong>Short version:</strong> PogoDex does not collect, store, or transmit any personal information from you to us. Your Pokémon collection data stays on your device. The app does display ads via Google AdMob, which may collect certain device identifiers as described below.</p>
+    </div>
+
+    <section>
+        <h2>1. Who We Are</h2>
+        <p>PogoDex is a free, independent Android application developed as a personal fan project. It is not affiliated with Nintendo, Game Freak, Creatures Inc., or The Pokémon Company International.</p>
+        <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a></p>
+    </section>
+
+    <section>
+        <h2>2. Data We Collect</h2>
+        <p>PogoDex itself does <strong>not</strong> collect any personally identifiable information. Specifically:</p>
+        <ul>
+            <li>We do not require you to create an account or log in.</li>
+            <li>We do not collect your name, email address, or any other personal details.</li>
+            <li>Your Pokémon collection progress (caught Pokémon, caught status) is stored <strong>locally on your device only</strong> using Android's Room database. This data never leaves your device unless you explicitly use the Export feature to create a backup file.</li>
+            <li>We do not use crash reporting or analytics SDKs.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Advertising — Google AdMob</h2>
+        <p>PogoDex displays advertisements provided by <strong>Google AdMob</strong>. To serve and personalise ads, Google may collect and use:</p>
+        <ul>
+            <li>Advertising ID (Google Advertising ID / GAID)</li>
+            <li>Device information (model, operating system version)</li>
+            <li>IP address (for approximate location / country)</li>
+            <li>App usage data and interaction with ads</li>
+        </ul>
+        <p>This data is collected and processed by Google, not by us. It is used to display relevant advertisements and to prevent ad fraud.</p>
+        <p>Google's data practices are governed by Google's own Privacy Policy:<br/>
+        <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+        <p>Google's advertising terms:<br/>
+        <a href="https://policies.google.com/technologies/ads" target="_blank">https://policies.google.com/technologies/ads</a></p>
+
+        <div class="highlight-box">
+            <p><strong>Opting out of personalised ads:</strong> You can opt out of interest-based advertising on your Android device by going to <em>Settings → Google → Ads → Delete advertising ID</em> (Android 12+) or enabling <em>Opt out of Ads Personalisation</em> on older versions.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>4. External Data Sources</h2>
+        <p>The app fetches publicly available Pokémon data from the following third-party services. These requests are made over HTTPS and do not include any personal data:</p>
+        <ul>
+            <li><strong>PokéAPI</strong> (<a href="https://pokeapi.co" target="_blank">pokeapi.co</a>) — Pokémon names, sprites, and metadata</li>
+            <li><strong>GitHub</strong> (<a href="https://github.com" target="_blank">github.com</a>) — app data files (JSON) hosted in a public repository</li>
+            <li><strong>Pokémon GO Wiki / Fandom</strong> (<a href="https://pokemongo.fandom.com" target="_blank">pokemongo.fandom.com</a>) — event and form Pokémon sprites</li>
+        </ul>
+        <p>These services have their own privacy policies which govern how they handle network requests.</p>
+    </section>
+
+    <section>
+        <h2>5. Permissions</h2>
+        <p>The app requests the following Android permission:</p>
+        <ul>
+            <li><strong>INTERNET</strong> — required to fetch Pokémon data and sprites from external sources, and to load advertisements.</li>
+        </ul>
+        <p>No other permissions (camera, microphone, contacts, location, storage) are requested.</p>
+    </section>
+
+    <section>
+        <h2>6. Data Retention and Deletion</h2>
+        <p>All locally stored data (your Pokémon collection) can be deleted at any time by:</p>
+        <ul>
+            <li>Going to <em>Android Settings → Apps → PogoDex → Storage → Clear Data</em>, or</li>
+            <li>Uninstalling the application.</li>
+        </ul>
+        <p>We do not hold any of your data on our servers, so there is nothing for us to delete on our end.</p>
+    </section>
+
+    <section>
+        <h2>7. Children's Privacy</h2>
+        <p>PogoDex is not directed at children under the age of 13. We do not knowingly collect personal information from children. The advertising SDK (Google AdMob) is configured to serve non-personalised ads only when the app determines the user may be a child, in compliance with applicable laws (COPPA, GDPR).</p>
+    </section>
+
+    <section>
+        <h2>8. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated date at the top. We encourage you to review this page periodically.</p>
+    </section>
+
+    <section>
+        <h2>9. Contact</h2>
+        <p>If you have any questions or concerns about this Privacy Policy, please contact us at:<br/>
+        <a href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a></p>
+    </section>
+</div>
+
+<footer>
+    <p>PogoDex · <a href="index.html">Home</a> · <a href="terms.html">Terms of Use</a></p>
+    <p style="margin-top:8px;">Pokémon and Pokémon GO are trademarks of Nintendo, Game Freak and The Pokémon Company. This app is an independent fan project.</p>
+</footer>
+
+</body>
+</html>

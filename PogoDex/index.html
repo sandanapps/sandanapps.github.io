@@ -1,1 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PogoDex – Track Your Pokémon Journey</title>
+    <style>
+        /* ── Reset & base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --sky-300: #7DD3FC;
+            --sky-400: #38BDF8;
+            --sky-500: #0EA5E9;
+            --sky-600: #0284C7;
+            --sky-800: #075985;
+            --pink-300: #F9A8D4;
+            --pink-500: #EC4899;
+            --pink-700: #BE185D;
+            --silver-50:  #F8FAFC;
+            --silver-100: #F1F5F9;
+            --silver-200: #E2E8F0;
+            --silver-400: #94A3B8;
+            --silver-600: #475569;
+            --surface-bg: #EFF6FF;
+            --text:   #1E293B;
+            --muted:  #64748B;
+            --radius: 16px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+            background: var(--silver-50);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
+        /* ── Utility ── */
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+        .btn-primary { background: var(--sky-500); color: #fff; }
+        .btn-outline  { background: transparent; color: var(--sky-600); border: 2px solid var(--sky-500); }
+
+        /* ── Nav ── */
+        nav {
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--silver-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--sky-600);
+            text-decoration: none;
+        }
+        .nav-logo img {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: block;
+        }
+        .nav-links { display: flex; gap: 24px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-size: .95rem; transition: color .15s; }
+        .nav-links a:hover { color: var(--sky-600); }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, var(--sky-800) 0%, var(--sky-600) 45%, var(--sky-500) 100%);
+            color: #fff;
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Decorative circles */
+        .hero::before {
+            content: "";
+            position: absolute;
+            right: -80px; top: -80px;
+            width: 420px; height: 420px;
+            background: rgba(255,255,255,.06);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            right: 60px; top: 60px;
+            width: 260px; height: 260px;
+            background: rgba(255,255,255,.05);
+            border-radius: 50%;
+        }
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 48px;
+        }
+        .hero-eyebrow {
+            font-size: .78rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            opacity: .75;
+            margin-bottom: 12px;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.05rem;
+            opacity: .88;
+            max-width: 480px;
+            margin-bottom: 32px;
+        }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-hero {
+            background: #fff;
+            color: var(--sky-700, var(--sky-600));
+            font-weight: 700;
+        }
+        .btn-hero:hover { background: var(--silver-100); }
+        .btn-hero-outline {
+            border: 2px solid rgba(255,255,255,.6);
+            color: #fff;
+        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,.12); }
+
+        /* App icon graphic */
+        .hero-graphic { position: relative; z-index: 1; }
+        .hero-app-icon {
+            width: 180px; height: 180px;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 4px 16px rgba(0,0,0,.16);
+            display: block;
+        }
+        /* Floating sprites */
+        .sprite-orbit {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px; height: 280px;
+        }
+        .sprite-orbit img {
+            position: absolute;
+            width: 52px; height: 52px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,.28));
+            animation: float 3s ease-in-out infinite;
+        }
+        .sprite-orbit img:nth-child(1) { top: 0;    left: 50%; transform: translateX(-50%);  animation-delay: 0s;   }
+        .sprite-orbit img:nth-child(2) { top: 50%;  right: 0;  transform: translateY(-50%);  animation-delay: .4s;  animation-name: float2; }
+        .sprite-orbit img:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%);  animation-delay: .8s;  animation-name: float3; }
+        .sprite-orbit img:nth-child(4) { top: 50%;  left: 0;   transform: translateY(-50%);  animation-delay: 1.2s; animation-name: float4; }
+        @keyframes float  { 0%,100%{transform:translateX(-50%) translateY(0)}  50%{transform:translateX(-50%) translateY(-8px)} }
+        @keyframes float2 { 0%,100%{transform:translateY(-50%) translateX(0)}  50%{transform:translateY(-50%) translateX(8px)} }
+        @keyframes float3 { 0%,100%{transform:translateX(-50%) translateY(0)}  50%{transform:translateX(-50%) translateY(8px)} }
+        @keyframes float4 { 0%,100%{transform:translateY(-50%) translateX(0)}  50%{transform:translateY(-50%) translateX(-8px)} }
+
+        /* ── Sections ── */
+        section { padding: 72px 0; }
+        .section-label {
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--sky-600);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 560px;
+            margin-bottom: 48px;
+        }
+
+        /* ── Feature cards ── */
+        #features { background: var(--surface-bg); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 28px 22px;
+            border: 1px solid var(--silver-200);
+            transition: box-shadow .2s, transform .2s;
+        }
+        .feature-card:hover { box-shadow: 0 8px 32px rgba(14,165,233,.12); transform: translateY(-4px); }
+        .feature-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--sky-400), var(--sky-600));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(14,165,233,.28);
+        }
+        .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .feature-card p  { font-size: .875rem; color: var(--muted); line-height: 1.55; }
+
+        /* ── Dex showcase ── */
+        #dexes { background: #fff; }
+        .dex-list { display: flex; flex-direction: column; gap: 48px; }
+        .dex-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 40px;
+        }
+        .dex-item.reverse { direction: rtl; }
+        .dex-item.reverse > * { direction: ltr; }
+        .dex-label {
+            display: inline-block;
+            background: rgba(14,165,233,.1);
+            color: var(--sky-600);
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .dex-item h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 10px; }
+        .dex-item p  { color: var(--muted); font-size: .93rem; line-height: 1.6; }
+        /* Pink accent for Shiny / Event label */
+        .dex-label.pink {
+            background: rgba(236,72,153,.1);
+            color: var(--pink-700);
+        }
+        .dex-visual {
+            background: linear-gradient(135deg, var(--surface-bg), #e0f2fe);
+            border-radius: var(--radius);
+            padding: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+            border: 1px solid var(--silver-200);
+        }
+        .dex-visual img {
+            width: 56px; height: 56px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,.12));
+            transition: transform .2s;
+        }
+        .dex-visual img:hover { transform: scale(1.2); }
+        .dex-visual img.uncaught { filter: grayscale(1) opacity(.3); }
+
+        /* ── Stats ── */
+        #stats-section { background: var(--surface-bg); }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 0;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            border: 1px solid var(--silver-200);
+        }
+        .stat-num {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--sky-500);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-label { font-size: .85rem; color: var(--muted); line-height: 1.4; }
+
+        /* ── Backup ── */
+        #backup { background: #fff; }
+        .backup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .backup-card {
+            background: var(--surface-bg);
+            border-radius: var(--radius);
+            padding: 28px 22px;
+            border: 1px solid var(--silver-200);
+        }
+        .backup-card h3 {
+            font-size: 1rem; font-weight: 700;
+            margin-bottom: 8px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .backup-card p { font-size: .875rem; color: var(--muted); }
+
+        /* ── Attribution ── */
+        #attribution { background: var(--surface-bg); }
+        .attr-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .attr-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--silver-200);
+        }
+        .attr-source {
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--sky-600);
+            margin-bottom: 8px;
+        }
+        .attr-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+        .attr-card p  { font-size: .875rem; color: var(--muted); line-height: 1.55; }
+
+        /* ── Footer ── */
+        footer {
+            background: var(--sky-800);
+            color: rgba(255,255,255,.7);
+            padding: 40px 0;
+            text-align: center;
+        }
+        .footer-logo { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        footer p { font-size: .82rem; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+        .disclaimer {
+            margin-top: 16px;
+            font-size: .75rem;
+            color: rgba(255,255,255,.45);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 680px) {
+            .hero-inner       { grid-template-columns: 1fr; }
+            .hero-graphic     { display: none; }
+            .dex-item         { grid-template-columns: 1fr; }
+            .dex-item.reverse { direction: ltr; }
+            .backup-grid      { grid-template-columns: 1fr; }
+            .nav-links        { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+    <div class="container nav-inner">
+        <a class="nav-logo" href="#">
+            <img src="icon.svg" alt="PogoDex icon" />
+            PogoDex
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#dexes">Dexes</a></li>
+            <li><a href="#backup">Backup</a></li>
+            <li><a href="#attribution">Credits</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Android App · Free · Offline</p>
+            <h1>Your Complete<br>Pokémon GO Tracker</h1>
+            <p>Track every Pokémon you've caught — regular, shiny, lucky, event-exclusive, and regional forms — all in one place.</p>
+            <div class="hero-actions">
+                <span class="btn btn-hero">Coming Soon on Google Play</span>
+            </div>
+        </div>
+        <div class="hero-graphic">
+            <div style="position:relative; display:inline-block;">
+                <img src="icon.svg" alt="PogoDex" class="hero-app-icon" />
+                <div class="sprite-orbit">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"  alt="Pikachu" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"   alt="Charizard" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png" alt="Mewtwo" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png" alt="Rayquaza" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section id="features">
+    <div class="container">
+        <p class="section-label">What's inside</p>
+        <h2 class="section-title">Everything you need to track your collection</h2>
+        <p class="section-subtitle">Six dedicated tracking tools, live stats, and full offline support — designed for serious Pokémon GO players.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Pokédex</h3>
+                <p>Mark every Pokémon as regular, shiny, or lucky. Filter by region, search by name, jump to uncaught.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Shiny Lucky</h3>
+                <p>Dedicated view for tracking your shiny and lucky Pokémon collection separately from the main dex.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎉</div>
+                <h3>Event Dex</h3>
+                <p>Track limited-time event and costumed Pokémon, split into regular and shiny tabs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔀</div>
+                <h3>Form Dex</h3>
+                <p>Alolan, Galarian, Hisuian, Paldean — every alternate form has its own entry, regular and shiny.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Live Stats</h3>
+                <p>At-a-glance progress bars on the home screen for each dex — caught vs. total, always current.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Backup &amp; Restore</h3>
+                <p>Export your full collection to a JSON file and restore it on any device or after reinstalling.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ DEX SHOWCASE ══════════ -->
+<section id="dexes">
+    <div class="container">
+        <p class="section-label">The dexes</p>
+        <h2 class="section-title">A tracker for every part of your collection</h2>
+        <div class="dex-list">
+
+            <!-- Pokédex -->
+            <div class="dex-item">
+                <div>
+                    <span class="dex-label">Main Dex</span>
+                    <h3>Full Pokédex</h3>
+                    <p>Browse all Pokémon with real sprites from PokéAPI. Tap to cycle through <strong>Not caught → Regular → Shiny → Lucky</strong>. Filter by region (Kanto, Johto, …), search by name, and jump straight to uncaught.</p>
+                </div>
+                <div class="dex-visual">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"   alt="Bulbasaur" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"   alt="Charmander" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"   alt="Squirtle" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"  alt="Pikachu" class="uncaught" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png"  alt="Jigglypuff" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png"  alt="Meowth" class="uncaught" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png"  alt="Gengar" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" alt="Snorlax" class="uncaught" />
+                </div>
+            </div>
+
+            <!-- Event Dex -->
+            <div class="dex-item reverse">
+                <div>
+                    <span class="dex-label pink">Event Dex</span>
+                    <h3>Event &amp; Costumed Pokémon</h3>
+                    <p>Never lose track of a costumed Pikachu or a Halloween Gengar. Sprites from the Pokémon GO Wiki. Two tabs: <strong>Regular</strong> and <strong>Shiny</strong>.</p>
+                </div>
+                <div class="dex-visual">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png"  alt="Shiny Pikachu" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png"        alt="Lapras" class="uncaught" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/131.png" alt="Shiny Lapras" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png"         alt="Gengar" class="uncaught" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/94.png"  alt="Shiny Gengar" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/143.png" alt="Shiny Snorlax" class="uncaught" />
+                </div>
+            </div>
+
+            <!-- Form Dex -->
+            <div class="dex-item">
+                <div>
+                    <span class="dex-label">Form Dex</span>
+                    <h3>Regional &amp; Alternate Forms</h3>
+                    <p>Alolan Vulpix, Galarian Slowpoke, Hisuian Arcanine — every alternate form has its own entry. Track regular and shiny variants independently.</p>
+                </div>
+                <div class="dex-visual">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10091.png" alt="Alolan Vulpix"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png'" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png" alt="Alolan Raichu"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png'" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10100.png" alt="Alolan Rattata" class="uncaught"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png'" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10159.png" alt="Galarian Slowpoke" class="uncaught"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png'" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10195.png" alt="Hisuian Arcanine"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png'" />
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10096.png" alt="Alolan Geodude" class="uncaught"
+                         onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png'" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ STATS ══════════ -->
+<section id="stats-section">
+    <div class="container">
+        <p class="section-label">Progress at a glance</p>
+        <h2 class="section-title">Know exactly where you stand</h2>
+        <p class="section-subtitle">The home screen shows live completion stats for every dex — so you always know what's left to catch.</p>
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-num">1000+</div>
+                <div class="stat-label">Pokémon to track</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Dedicated dexes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Catch states<br><small style="font-size:.72rem">(Regular · Shiny · Lucky)</small></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Offline — no login required</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ BACKUP ══════════ -->
+<section id="backup">
+    <div class="container">
+        <p class="section-label">Your data, your way</p>
+        <h2 class="section-title">Export &amp; Import your collection</h2>
+        <p class="section-subtitle">All progress is stored locally on your device. Back it up anytime with a single tap.</p>
+        <div class="backup-grid">
+            <div class="backup-card">
+                <h3><span style="font-size:1.4rem">📤</span> Export to JSON</h3>
+                <p>Save your entire collection — all dexes, all states — to a <code>.json</code> file you can keep anywhere.</p>
+            </div>
+            <div class="backup-card">
+                <h3><span style="font-size:1.4rem">📥</span> Import &amp; Restore</h3>
+                <p>Moving to a new phone? Reinstalling? Import your backup and pick up exactly where you left off.</p>
+            </div>
+            <div class="backup-card">
+                <h3><span style="font-size:1.4rem">🔒</span> Privacy First</h3>
+                <p>No account, no cloud, no tracking. Your data never leaves your device unless you share the file yourself.</p>
+            </div>
+            <div class="backup-card">
+                <h3><span style="font-size:1.4rem">⚡</span> Fresh Sprites</h3>
+                <p>Pokémon data is fetched from PokéAPI on demand and cached locally for fast, offline browsing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ ATTRIBUTION ══════════ -->
+<section id="attribution">
+    <div class="container">
+        <p class="section-label">Credits</p>
+        <h2 class="section-title">Built on great open data</h2>
+        <p class="section-subtitle">PogoDex wouldn't be possible without these resources.</p>
+        <div class="attr-cards">
+            <div class="attr-card">
+                <div class="attr-source">Pokémon Data &amp; Sprites</div>
+                <h3>PokéAPI</h3>
+                <p>All Pokémon names, Pokédex numbers, types, and sprites are sourced from the free and open PokéAPI project at <strong>pokeapi.co</strong>.</p>
+            </div>
+            <div class="attr-card">
+                <div class="attr-source">Event &amp; Form Sprites</div>
+                <h3>Pokémon GO Wiki</h3>
+                <p>Event and alternate-form sprites are sourced from the community-maintained Pokémon GO Wiki at <strong>pokemongo.fandom.com</strong>.</p>
+            </div>
+            <div class="attr-card">
+                <div class="attr-source">Fan Project</div>
+                <h3>Disclaimer</h3>
+                <p>Pokémon and Pokémon GO are trademarks of Nintendo, Game Freak, and The Pokémon Company. This app is not affiliated with or endorsed by any of these companies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="container">
+        <div class="footer-logo">PogoDex</div>
+        <p>A personal Pokémon GO collection tracker for Android.<br>Free, offline, and open.</p>
+        <p class="disclaimer">Pokémon and Pokémon GO are trademarks of Nintendo, Game Freak, Creatures Inc., and The Pokémon Company International. This application is an independent fan project and is not affiliated with, endorsed by, or connected to any of these companies in any way.</p>
+        <p style="margin-top:16px; font-size:.8rem;">
+            <a href="privacy.html" style="color:rgba(255,255,255,.55);">Privacy Policy</a>
+            &nbsp;·&nbsp;
+            <a href="terms.html"   style="color:rgba(255,255,255,.55);">Terms of Use</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
