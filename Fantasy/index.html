@@ -201,34 +201,12 @@
 </div>
 
 <script>
-// ===================== KONSTANTE =====================
-const TEAMS = ['NK Busen','Inter Ducks','Nk River Plata','Nk Martinkovac','Nk Stokilaši','Nk Shogx'];
-const MAX_ROUNDS = 36;
-const TEAM_COLORS = ['#4f8ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];
-const TEAM_INITIALS = { 'NK Busen':'NKB','Inter Ducks':'ID','Nk River Plata':'RP','Nk Martinkovac':'MK','Nk Stokilaši':'NSK','Nk Shogx':'SHG' };
-
-// Početni podaci (kola 1-25 iz xlsx-a)
-const INITIAL_SCORES = {
-  'NK Busen':      [40,63,46,53,36,24,56,42,43,42,29,19,33,63,44,61,40,60,57,65,74,47,47,67,49],
-  'Inter Ducks':   [33,57,64,36,44,36,60,32,51,42,23,27,35,73,34,63,23,64,61,67,73,50,25,63,42],
-  'Nk River Plata':[62,43,45,52,34,39,50,74,45,40,30,42,42,81,35,63,29,44,47,56,69,49,28,56,57],
-  'Nk Martinkovac':[54,49,44,43,40,22,63,61,52,37,35,25,41,70,45,62,37,52,33,61,60,34,41,48,50],
-  'Nk Stokilaši':  [23,23,44,47,38,33,52,49,42,39,38,31,49,36,35,45,48,44,77,61,51,47,41,47,50],
-  'Nk Shogx':      [34,26,45,52,20,22,55,39,40,51,37,25,29,84,46,53,39,67,55,46,57,64,27,62,41]
-};
-
-// ===================== STORAGE =====================
-function buildScores(parsed) {
-  const result = {};
-  TEAMS.forEach(t => {
-    result[t] = Array(MAX_ROUNDS).fill(null);
-    if (INITIAL_SCORES[t]) INITIAL_SCORES[t].forEach((v, i) => { result[t][i] = v; });
-    if (parsed && parsed[t]) parsed[t].forEach((v, i) => { if (v !== null && v !== undefined) result[t][i] = v; });
-  });
-  return result;
-}
-
-let SCORES = buildScores(null); // inicijalno iz koda
+// ===================== VARIJABLE (učitane iz data.json) =====================
+let TEAMS = [];
+let MAX_ROUNDS = 36;
+let TEAM_COLORS = [];
+let TEAM_INITIALS = {};
+let SCORES = {};
 
 function getPlayedRounds() {
   // Broj kola gdje SVI igrači imaju bodove
@@ -286,14 +264,26 @@ let charts = {};
 
 document.addEventListener('DOMContentLoaded', () => {
   fetch('./data.json')
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(parsed => {
-      SCORES = buildScores(parsed);
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      TEAMS = data.teams.map(t => t.name);
+      TEAM_COLORS = data.teams.map(t => t.color);
+      data.teams.forEach(t => { TEAM_INITIALS[t.name] = t.initials; });
+      MAX_ROUNDS = data.max_rounds || 36;
+      SCORES = {};
+      TEAMS.forEach(t => {
+        SCORES[t] = Array(MAX_ROUNDS).fill(null);
+        if (data.scores[t]) data.scores[t].forEach((v, i) => { if (v !== null && v !== undefined) SCORES[t][i] = v; });
+      });
       renderAll();
     })
     .catch(() => {
-      // data.json ne postoji ili nije dostupan — koristi hardcoded podatke
-      renderAll();
+      document.querySelector('.main').innerHTML = `
+        <div style="text-align:center;padding:80px 24px;color:var(--text-muted)">
+          <div style="font-size:48px;margin-bottom:16px">⚠️</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px">Nije moguće učitati podatke</div>
+          <div style="font-size:14px">Provjeri da je <code style="background:var(--surface2);padding:2px 6px;border-radius:4px">data.json</code> dostupan i ispravan.</div>
+        </div>`;
     });
 });
 
