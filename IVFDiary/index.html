@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IVF Dnevnik - Aplikacija za praćenje IVF postupka. Pratite terapiju, događaje, beta rezultate i statistiku.">
+    <meta name="keywords" content="IVF, dnevnik, IVF diary, IVF aplikacija, MPO, IVF planner, praćenje trudnoće">
+    <title>IVF Dnevnik - Vaš osobni asistent za praćenje IVF postupka</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2 data-translate="app-name">IVF Dnevnik</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#features" data-translate="nav-features">Mogućnosti</a>
+                <a href="#about" data-translate="nav-about">O aplikaciji</a>
+                <a href="#download" data-translate="nav-download">Preuzmi</a>
+                <button id="language-toggle" class="language-btn">
+                    <img id="language-flag-img" src="flags/us.svg" alt="EN flag" class="language-flag-img"/>
+                    <span class="language-text">EN</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-translate="hero-title">Vaš osobni asistent za praćenje IVF postupka</h1>
+                <p class="hero-subtitle" data-translate="hero-subtitle">Organizirajte terapiju, pratite događaje i analizirajte rezultate na jednom mjestu</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary" data-translate="hero-download">Preuzmi aplikaciju</a>
+                    <a href="#features" class="btn btn-secondary" data-translate="hero-learn-more">Saznaj više</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-preview">
+                            <div class="preview-placeholder">
+                                <svg width="120" height="120" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Background circle -->
+                                    <circle cx="54" cy="54" r="54" fill="#B0D4F1"/>
+                                    <!-- Drop shadow -->
+                                    <path fill="#22000000" transform="translate(0,2.5)"
+                                        d="M54,78 C54,78 30,62 30,47 C30,38 36,32 44,32 C48.5,32 52,34 54,37 C56,34 59.5,32 64,32 C72,32 78,38 78,47 C78,62 54,78 54,78Z"/>
+                                    <!-- Dark outline -->
+                                    <path fill="#D4849A"
+                                        d="M54,77 C54,77 29,61 29,46 C29,37 35,31 43,31 C47.5,31 51.5,33 54,36 C56.5,33 60.5,31 65,31 C73,31 79,37 79,46 C79,61 54,77 54,77Z"/>
+                                    <!-- Main heart -->
+                                    <path fill="#FFB6C1"
+                                        d="M54,74 C54,74 32,59 32,46 C32,38 37,33 44,33 C48,33 52,35 54,38 C56,35 60,33 64,33 C71,33 76,38 76,46 C76,59 54,74 54,74Z"/>
+                                    <!-- Highlight shine -->
+                                    <path fill="#FFDDE3"
+                                        d="M44,34 C39,35 34,39 33,45 C39,38 48,36 54,39 C52,35 48,34 44,34Z"/>
+                                    <!-- Blastocyst: outer ring -->
+                                    <circle cx="54" cy="53" r="8" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+                                    <!-- Blastocyst: cell -->
+                                    <circle cx="57.7" cy="56.7" r="2.8" fill="#FFFFFF"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title" data-translate="features-title">Sve što vam treba na jednom mjestu</h2>
+            <p class="section-subtitle" data-translate="features-subtitle">IVF Dnevnik nudi sve alate za jednostavno praćenje vašeg IVF postupka</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"/>
+                            <circle cx="12" cy="10" r="3" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-cycles-title">Praćenje ciklusa</h3>
+                    <p data-translate="feature-cycles-desc">Organizirajte svoje IVF cikluse, pratite napredak i bilježite ishode postupka.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-medications-title">Terapija i lijekovi</h3>
+                    <p data-translate="feature-medications-desc">Pratite svoju terapiju, doziranje lijekova i označavajte kada ste uzeli lijek.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-events-title">Kalendar događaja</h3>
+                    <p data-translate="feature-events-desc">Bilježite važne događaje: folikulometrije, punkcije, transfere i beta testove.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-beta-title">Beta rezultati</h3>
+                    <p data-translate="feature-beta-desc">Unosite beta hCG rezultate i pratite njihov rast između uzastopnih testova.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="20" x2="12" y2="10" stroke-width="2"/>
+                            <line x1="18" y1="20" x2="18" y2="4" stroke-width="2"/>
+                            <line x1="6" y1="20" x2="6" y2="16" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-stats-title">Statistika i analiza</h3>
+                    <p data-translate="feature-stats-desc">Analizirajte svoje cikluse, usporedite ih i pregledajte detaljan timeline aktivnosti.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-width="2"/>
+                            <polyline points="14 2 14 8 20 8" stroke-width="2"/>
+                            <line x1="16" y1="13" x2="8" y2="13" stroke-width="2"/>
+                            <line x1="16" y1="17" x2="8" y2="17" stroke-width="2"/>
+                            <polyline points="10 9 9 9 8 9" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-translate="feature-diary-title">Dnevnik</h3>
+                    <p data-translate="feature-diary-desc">Vodite osobni dnevnik, bilježite osjećaje i povezujte bilješke sa ciklusima.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 data-translate="about-title">O IVF Dnevnik aplikaciji</h2>
+                    <p data-translate="about-desc">IVF Dnevnik je dizajniran za sve koji prolaze kroz IVF postupak i žele imati organiziran i jednostavan način praćenja svih aspekata terapije.</p>
+
+                    <div class="about-features">
+                        <div class="about-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20 6 9 17 4 12" stroke-width="2"/>
+                            </svg>
+                            <span data-translate="about-feature-free">Potpuno besplatna aplikacija</span>
+                        </div>
+                        <div class="about-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20 6 9 17 4 12" stroke-width="2"/>
+                            </svg>
+                            <span data-translate="about-feature-privacy">Privatnost podataka zagarantirana</span>
+                        </div>
+                        <div class="about-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20 6 9 17 4 12" stroke-width="2"/>
+                            </svg>
+                            <span data-translate="about-feature-intuitive">Intuitivno sučelje</span>
+                        </div>
+                        <div class="about-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20 6 9 17 4 12" stroke-width="2"/>
+                            </svg>
+                            <span data-translate="about-feature-languages">Dostupno na hrvatskom i engleskom jeziku</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-placeholder">
+                        <svg width="200" height="200" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background circle -->
+                            <circle cx="54" cy="54" r="54" fill="#B0D4F1"/>
+                            <!-- Drop shadow -->
+                            <path fill="#22000000" transform="translate(0,2.5)"
+                                d="M54,78 C54,78 30,62 30,47 C30,38 36,32 44,32 C48.5,32 52,34 54,37 C56,34 59.5,32 64,32 C72,32 78,38 78,47 C78,62 54,78 54,78Z"/>
+                            <!-- Dark outline -->
+                            <path fill="#D4849A"
+                                d="M54,77 C54,77 29,61 29,46 C29,37 35,31 43,31 C47.5,31 51.5,33 54,36 C56.5,33 60.5,31 65,31 C73,31 79,37 79,46 C79,61 54,77 54,77Z"/>
+                            <!-- Main heart -->
+                            <path fill="#FFB6C1"
+                                d="M54,74 C54,74 32,59 32,46 C32,38 37,33 44,33 C48,33 52,35 54,38 C56,35 60,33 64,33 C71,33 76,38 76,46 C76,59 54,74 54,74Z"/>
+                            <!-- Highlight shine -->
+                            <path fill="#FFDDE3"
+                                d="M44,34 C39,35 34,39 33,45 C39,38 48,36 54,39 C52,35 48,34 44,34Z"/>
+                            <!-- Blastocyst: outer ring -->
+                            <circle cx="54" cy="53" r="8" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+                            <!-- Blastocyst: cell -->
+                            <circle cx="57.7" cy="56.7" r="2.8" fill="#FFFFFF"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <div class="download-content">
+                <h2 data-translate="download-title">Preuzmite IVF Dnevnik danas</h2>
+                <p data-translate="download-subtitle">Započnite organizirano praćenje vašeg IVF postupka</p>
+                <div class="download-buttons">
+                    <a href="#" class="download-btn">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                        </svg>
+                        <div>
+                            <span class="download-label" data-translate="download-label">Preuzmi na</span>
+                            <span class="download-store">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+                <p class="download-note" data-translate="download-note">* Aplikacija je trenutno u razvoju</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 data-translate="app-name">IVF Dnevnik</h3>
+                    <p data-translate="footer-tagline">Vaš osobni asistent za praćenje IVF postupka</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-translate="footer-app-title">Aplikacija</h4>
+                        <a href="#features" data-translate="nav-features">Mogućnosti</a>
+                        <a href="#about" data-translate="nav-about">O aplikaciji</a>
+                        <a href="#download" data-translate="nav-download">Preuzmi</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-translate="footer-legal-title">Pravno</h4>
+                        <a href="privacy.html" data-translate="footer-privacy">Politika privatnosti</a>
+                        <a href="terms.html" data-translate="footer-terms">Uvjeti korištenja</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-translate="footer-contact-title">Kontakt</h4>
+                        <a href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-translate="footer-copyright">&copy; 2026 IVF Dnevnik. Sva prava pridržana.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
