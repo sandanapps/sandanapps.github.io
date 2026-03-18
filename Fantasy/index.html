@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasy Liga 25/26 — Pregled</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3350;
+    --accent: #4f8ef7; --accent2: #a855f7; --green: #22c55e; --red: #ef4444;
+    --yellow: #f59e0b; --text: #e2e8f0; --text-muted: #94a3b8;
+    --gold: #fbbf24; --silver: #94a3b8; --bronze: #cd7f32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+  .nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; gap: 4px; position: sticky; top: 0; z-index: 100; overflow-x: auto; }
+  .nav-logo { font-size: 20px; font-weight: 800; color: var(--accent); padding: 16px 0; margin-right: 12px; letter-spacing: -0.5px; flex-shrink: 0; }
+  .nav-logo span { color: var(--accent2); }
+  .nav-tab { padding: 18px 14px; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text-muted); border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .main { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .section-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .card-value { font-size: 28px; font-weight: 700; }
+  .card-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  .leaderboard { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+  .lb-header { display: grid; grid-template-columns: 48px 1fr 80px 80px 80px 80px 60px; gap: 8px; padding: 12px 20px; background: var(--surface2); font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .lb-row { display: grid; grid-template-columns: 48px 1fr 80px 80px 80px 80px 60px; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); align-items: center; transition: background 0.15s; }
+  .lb-row:hover { background: var(--surface2); }
+  .lb-rank { font-weight: 700; font-size: 16px; }
+  .lb-rank.r1 { color: var(--gold); } .lb-rank.r2 { color: var(--silver); } .lb-rank.r3 { color: var(--bronze); }
+  .team-name { font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .team-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; flex-shrink: 0; }
+  .lb-pts { font-weight: 700; font-size: 15px; text-align: right; }
+  .lb-num { text-align: right; color: var(--text-muted); font-size: 14px; }
+  .change { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 13px; font-weight: 600; }
+  .change.up { color: var(--green); } .change.down { color: var(--red); } .change.same { color: var(--text-muted); }
+  .omega-badge { background: var(--accent); color: white; border-radius: 4px; padding: 2px 6px; font-size: 11px; font-weight: 700; }
+
+  .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+  .chart-wrap h3 { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+  .chart-container { position: relative; height: 340px; }
+
+  .round-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .round-controls label { font-size: 14px; color: var(--text-muted); }
+  .round-slider { -webkit-appearance: none; appearance: none; width: 280px; height: 6px; border-radius: 3px; background: var(--border); outline: none; cursor: pointer; }
+  .round-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+  .round-badge { background: var(--accent); color: white; border-radius: 8px; padding: 6px 16px; font-weight: 700; font-size: 15px; min-width: 70px; text-align: center; }
+
+  .round-table { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+  .rt-header { display: grid; grid-template-columns: 48px 1fr 90px 100px 80px 80px; gap: 8px; padding: 12px 20px; background: var(--surface2); font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+  .rt-row { display: grid; grid-template-columns: 48px 1fr 90px 100px 80px 80px; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--border); align-items: center; }
+  .score-pill { display: inline-block; background: var(--surface2); border-radius: 6px; padding: 3px 10px; font-weight: 700; font-size: 14px; }
+  .score-pill.best { background: rgba(79,142,247,0.2); color: var(--accent); border: 1px solid var(--accent); }
+
+  .forma-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .forma-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .forma-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .forma-title { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .forma-total { font-size: 22px; font-weight: 800; }
+  .forma-rounds { display: flex; gap: 6px; }
+  .forma-round-box { flex: 1; text-align: center; background: var(--surface2); border-radius: 6px; padding: 8px 4px; }
+  .forma-round-box .rnd { font-size: 10px; color: var(--text-muted); }
+  .forma-round-box .pts { font-size: 16px; font-weight: 700; }
+  .rank-bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 6px; }
+  .rank-bar-fill { height: 100%; border-radius: 3px; }
+
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl th { padding: 10px 14px; text-align: left; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--surface2); }
+
+  .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 32px; }
+  .spark-bar { border-radius: 2px; min-width: 4px; opacity: 0.7; }
+
+  @media(max-width: 768px) {
+    .lb-header, .lb-row { grid-template-columns: 36px 1fr 70px 60px; }
+    .lb-header > *:nth-child(n+5), .lb-row > *:nth-child(n+5) { display: none; }
+    .rt-header, .rt-row { grid-template-columns: 36px 1fr 80px 80px; }
+    .rt-header > *:nth-child(n+5), .rt-row > *:nth-child(n+5) { display: none; }
+    .round-slider { width: 180px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Fantasy <span>25/26</span></div>
+  <div class="nav-tab active" onclick="showPage('ljestvica', this)">Ljestvica</div>
+  <div class="nav-tab" onclick="showPage('kolo', this)">Po kolima</div>
+  <div class="nav-tab" onclick="showPage('forma', this)">Forma</div>
+  <div class="nav-tab" onclick="showPage('grafovi', this)">Grafovi</div>
+  <div class="nav-tab" onclick="showPage('statistike', this)">Statistike</div>
+</nav>
+
+<div class="main">
+
+  <!-- LJESTVICA -->
+  <div class="page active" id="page-ljestvica">
+    <div class="section-title">Stanje nacije</div>
+    <div class="section-sub" id="current-round-info">Ukupna ljestvica — Fantasy liga 25/26</div>
+    <div class="cards" id="summary-cards"></div>
+    <div class="leaderboard">
+      <div class="lb-header">
+        <div>#</div><div>Ekipa</div>
+        <div style="text-align:right">Ukupno</div>
+        <div style="text-align:right">Min kolo</div>
+        <div style="text-align:right">Max kolo</div>
+        <div style="text-align:right">Ω pobjede</div>
+        <div style="text-align:right">Promjena</div>
+      </div>
+      <div id="leaderboard-rows"></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Ukupni zbroj svih ekipa po kolu</h3>
+      <div class="chart-container"><canvas id="chart-cumulative"></canvas></div>
+    </div>
+  </div>
+
+  <!-- PO KOLIMA -->
+  <div class="page" id="page-kolo">
+    <div class="section-title">Stanje po kolu</div>
+    <div class="section-sub">Odaberi kolo za detaljan prikaz</div>
+    <div class="round-controls">
+      <label>Kolo:</label>
+      <input type="range" class="round-slider" id="round-slider" min="1" max="36" value="1" oninput="updateRoundView(this.value)">
+      <div class="round-badge" id="round-badge">1</div>
+    </div>
+    <div class="cards" id="round-cards"></div>
+    <div class="round-table">
+      <div class="rt-header">
+        <div>#</div><div>Ekipa</div>
+        <div style="text-align:right">Bodovi u kolu</div>
+        <div style="text-align:right">Ukupno do kola</div>
+        <div style="text-align:right">Pozicija u kolu</div>
+        <div style="text-align:right">Pozicija nakon kola</div>
+      </div>
+      <div id="round-table-rows"></div>
+    </div>
+    <div class="chart-wrap">
+      <h3 id="round-chart-title">Bodovi u kolu</h3>
+      <div class="chart-container"><canvas id="chart-round-bar"></canvas></div>
+    </div>
+  </div>
+
+  <!-- FORMA -->
+  <div class="page" id="page-forma">
+    <div class="section-title">Forma</div>
+    <div class="section-sub" id="forma-sub">Zadnjih 5 odigranih kola</div>
+    <div class="forma-grid" id="forma-cards"></div>
+    <div class="chart-wrap">
+      <h3 id="forma-chart-title">Forma — usporedba zadnjih 5 kola</h3>
+      <div class="chart-container"><canvas id="chart-forma"></canvas></div>
+    </div>
+  </div>
+
+  <!-- GRAFOVI -->
+  <div class="page" id="page-grafovi">
+    <div class="section-title">Grafovi</div>
+    <div class="section-sub">Vizualni prikaz sezone</div>
+    <div class="chart-wrap">
+      <h3>Rang po kolima (pozicija na ljestvici)</h3>
+      <div class="chart-container" style="height:380px"><canvas id="chart-rank"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Bodovi po kolu — sve ekipe</h3>
+      <div class="chart-container" style="height:380px"><canvas id="chart-all-rounds"></canvas></div>
+    </div>
+  </div>
+
+  <!-- STATISTIKE -->
+  <div class="page" id="page-statistike">
+    <div class="section-title">Statistike</div>
+    <div class="section-sub">Pregled sezone po ekipama</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px;">
+      <table class="tbl"><thead><tr>
+        <th>#</th><th>Ekipa</th><th>Ukupno</th><th>Prosjek/kolu</th>
+        <th>Min kolo</th><th>Max kolo</th><th>Ω pobjede</th><th>Sva kola</th>
+      </tr></thead><tbody id="stats-tbody"></tbody></table>
+    </div>
+    <div class="chart-wrap">
+      <h3>Prosjek bodova po ekipi</h3>
+      <div class="chart-container"><canvas id="chart-dist"></canvas></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== KONSTANTE =====================
+const TEAMS = ['NK Busen','Inter Ducks','Nk River Plata','Nk Martinkovac','Nk Stokilaši','Nk Shogx'];
+const MAX_ROUNDS = 36;
+const TEAM_COLORS = ['#4f8ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];
+const TEAM_INITIALS = { 'NK Busen':'NKB','Inter Ducks':'ID','Nk River Plata':'RP','Nk Martinkovac':'MK','Nk Stokilaši':'NSK','Nk Shogx':'SHG' };
+
+// Početni podaci (kola 1-25 iz xlsx-a)
+const INITIAL_SCORES = {
+  'NK Busen':      [40,63,46,53,36,24,56,42,43,42,29,19,33,63,44,61,40,60,57,65,74,47,47,67,49],
+  'Inter Ducks':   [33,57,64,36,44,36,60,32,51,42,23,27,35,73,34,63,23,64,61,67,73,50,25,63,42],
+  'Nk River Plata':[62,43,45,52,34,39,50,74,45,40,30,42,42,81,35,63,29,44,47,56,69,49,28,56,57],
+  'Nk Martinkovac':[54,49,44,43,40,22,63,61,52,37,35,25,41,70,45,62,37,52,33,61,60,34,41,48,50],
+  'Nk Stokilaši':  [23,23,44,47,38,33,52,49,42,39,38,31,49,36,35,45,48,44,77,61,51,47,41,47,50],
+  'Nk Shogx':      [34,26,45,52,20,22,55,39,40,51,37,25,29,84,46,53,39,67,55,46,57,64,27,62,41]
+};
+
+// ===================== STORAGE =====================
+function buildScores(parsed) {
+  const result = {};
+  TEAMS.forEach(t => {
+    result[t] = Array(MAX_ROUNDS).fill(null);
+    if (INITIAL_SCORES[t]) INITIAL_SCORES[t].forEach((v, i) => { result[t][i] = v; });
+    if (parsed && parsed[t]) parsed[t].forEach((v, i) => { if (v !== null && v !== undefined) result[t][i] = v; });
+  });
+  return result;
+}
+
+let SCORES = buildScores(null); // inicijalno iz koda
+
+function getPlayedRounds() {
+  // Broj kola gdje SVI igrači imaju bodove
+  let count = 0;
+  for (let r = 0; r < MAX_ROUNDS; r++) {
+    if (TEAMS.every(t => SCORES[t][r] !== null)) count++;
+    else break;
+  }
+  return count;
+}
+
+function isRoundDone(r) { // r je 0-indexed
+  return TEAMS.every(t => SCORES[t][r] !== null);
+}
+
+// ===================== HELPERS =====================
+function getTeamTotal(team, upToRound) {
+  return SCORES[team].slice(0, upToRound).filter(v => v !== null).reduce((a,b) => a+b, 0);
+}
+
+function getAllTotals(upToRound) {
+  return TEAMS.map(t => ({ team: t, total: getTeamTotal(t, upToRound) }))
+    .sort((a,b) => b.total - a.total);
+}
+
+function getRoundScores(round) { // round 1-indexed
+  return TEAMS.map(t => ({ team: t, score: SCORES[t][round-1] }))
+    .filter(r => r.score !== null)
+    .sort((a,b) => b.score - a.score);
+}
+
+function getCumulativeData(team) {
+  const played = getPlayedRounds();
+  let cum = 0;
+  return SCORES[team].slice(0, played).map(s => { cum += (s || 0); return cum; });
+}
+
+function getOmegaWins(team) {
+  const played = getPlayedRounds();
+  let wins = 0;
+  for (let r = 0; r < played; r++) {
+    const scores = TEAMS.map(t => SCORES[t][r]).filter(v => v !== null);
+    if (!scores.length) continue;
+    const maxScore = Math.max(...scores);
+    const maxCount = scores.filter(s => s === maxScore).length;
+    if (SCORES[team][r] === maxScore && maxCount === 1) wins++;
+  }
+  return wins;
+}
+
+function teamColor(team) { return TEAM_COLORS[TEAMS.indexOf(team)]; }
+
+// ===================== INIT =====================
+let charts = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('./data.json')
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(parsed => {
+      SCORES = buildScores(parsed);
+      renderAll();
+    })
+    .catch(() => {
+      // data.json ne postoji ili nije dostupan — koristi hardcoded podatke
+      renderAll();
+    });
+});
+
+function renderAll() {
+  const played = getPlayedRounds();
+  renderSummaryCards(played);
+  renderLeaderboard(played);
+  rebuildChart('chart-cumulative', renderCumulativeChart);
+  const sliderVal = Math.min(parseInt(document.getElementById('round-slider').value) || played, played || 1);
+  document.getElementById('round-slider').max = Math.max(played, 1);
+  document.getElementById('round-slider').value = sliderVal;
+  document.getElementById('round-badge').textContent = sliderVal;
+  if (played > 0) renderRoundView(sliderVal);
+  renderFormaPage();
+  rebuildChart('chart-rank', renderRankChart);
+  rebuildChart('chart-all-rounds', renderAllRoundsChart);
+  renderStatsPage();
+}
+
+function rebuildChart(id, fn) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+  fn();
+}
+
+// ===================== NAVIGATION =====================
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ===================== LJESTVICA =====================
+function renderSummaryCards(played) {
+  if (!played) {
+    document.getElementById('summary-cards').innerHTML = `<div class="card"><div class="card-label">Status</div><div class="card-value" style="font-size:16px;color:var(--text-muted)">Nema odigranih kola</div></div>`;
+    return;
+  }
+  const totals = getAllTotals(played);
+  const leader = totals[0];
+  const gap = totals[0].total - totals[1].total;
+  const allMax = TEAMS.map(t => ({ t, m: Math.max(...SCORES[t].slice(0,played).filter(v=>v!==null)) }));
+  const best = allMax.reduce((a,b) => a.m > b.m ? a : b);
+
+  document.getElementById('summary-cards').innerHTML = `
+    <div class="card"><div class="card-label">Odigrana kola</div><div class="card-value">${played}</div><div class="card-sub">od ${MAX_ROUNDS} planiranih</div></div>
+    <div class="card"><div class="card-label">Lider sezone</div><div class="card-value" style="font-size:18px;color:var(--gold)">${leader.team}</div><div class="card-sub">${leader.total} bodova</div></div>
+    <div class="card"><div class="card-label">Prednost lidera</div><div class="card-value" style="color:var(--green)">+${gap}</div><div class="card-sub">pred ${totals[1].team}</div></div>
+    <div class="card"><div class="card-label">Rekord kola</div><div class="card-value" style="color:var(--yellow)">${best.m}</div><div class="card-sub">${best.t}</div></div>
+  `;
+  document.getElementById('current-round-info').textContent = `Ukupna ljestvica nakon ${played}. kola — Fantasy liga 25/26`;
+}
+
+function renderLeaderboard(played) {
+  if (!played) { document.getElementById('leaderboard-rows').innerHTML = ''; return; }
+  const totals = getAllTotals(played);
+  const prevTotals = played > 1 ? getAllTotals(played - 1) : totals;
+
+  let html = '';
+  totals.forEach((item, i) => {
+    const prevRank = prevTotals.findIndex(p => p.team === item.team) + 1;
+    const currRank = i + 1;
+    const rankChange = prevRank - currRank;
+    let changeHtml = rankChange > 0
+      ? `<div class="change up">↑${rankChange}</div>`
+      : rankChange < 0 ? `<div class="change down">↓${Math.abs(rankChange)}</div>`
+      : `<div class="change same">—</div>`;
+
+    const color = teamColor(item.team);
+    const scores = SCORES[item.team].slice(0, played).filter(v => v !== null);
+    const minScore = Math.min(...scores);
+    const maxScore = Math.max(...scores);
+    const omega = getOmegaWins(item.team);
+    const crown = currRank === 1 ? ' 👑' : '';
+
+    html += `
+      <div class="lb-row">
+        <div class="lb-rank ${currRank<=3?'r'+currRank:''}">${currRank}</div>
+        <div class="team-name">
+          <div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>
+          ${item.team}${crown}
+        </div>
+        <div class="lb-pts">${item.total}</div>
+        <div class="lb-num">${minScore}</div>
+        <div class="lb-num">${maxScore}</div>
+        <div class="lb-num">${omega > 0 ? `<span class="omega-badge">Ω${omega}</span>` : '—'}</div>
+        ${changeHtml}
+      </div>`;
+  });
+  document.getElementById('leaderboard-rows').innerHTML = html;
+}
+
+function renderCumulativeChart() {
+  const played = getPlayedRounds();
+  if (!played) return;
+  const ctx = document.getElementById('chart-cumulative').getContext('2d');
+  const labels = Array.from({length: played}, (_, i) => `K${i+1}`);
+
+  // Zbroj svih ekipa za svako kolo
+  const totalsPerRound = Array.from({length: played}, (_, r) =>
+    TEAMS.reduce((sum, t) => sum + (SCORES[t][r] || 0), 0)
+  );
+
+  charts['chart-cumulative'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Ukupno bodova svih ekipa',
+        data: totalsPerRound,
+        backgroundColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#fbbf24cc' : '#4f8ef7cc'),
+        borderColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#fbbf24' : '#4f8ef7'),
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          ...tooltipStyle(),
+          callbacks: {
+            label: ctx => ` Ukupno: ${ctx.parsed.y} bodova`,
+            afterLabel: ctx => {
+              const r = ctx.dataIndex;
+              const avg = (ctx.parsed.y / TEAMS.length).toFixed(1);
+              return ` Prosjek po ekipi: ${avg}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+        y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } }
+      }
+    }
+  });
+}
+
+// ===================== PO KOLIMA =====================
+let roundBarChart = null;
+
+function updateRoundView(val) {
+  document.getElementById('round-badge').textContent = val;
+  renderRoundView(parseInt(val));
+}
+
+function renderRoundView(round) {
+  const roundScores = getRoundScores(round);
+  if (!roundScores.length) {
+    document.getElementById('round-cards').innerHTML = `<div class="card"><div class="card-label">Kolo ${round}</div><div class="card-value" style="font-size:14px;color:var(--text-muted)">Nema unesenih bodova</div></div>`;
+    document.getElementById('round-table-rows').innerHTML = '';
+    return;
+  }
+  const totals = getAllTotals(round);
+  const prevTotals = round > 1 ? getAllTotals(round - 1) : totals;
+  const bestScore = Math.max(...roundScores.map(r => r.score));
+  const totalPts = roundScores.reduce((a,b) => a+b.score, 0);
+  const avg = (totalPts / roundScores.length).toFixed(1);
+
+  document.getElementById('round-cards').innerHTML = `
+    <div class="card"><div class="card-label">Max u kolu ${round}</div><div class="card-value">${bestScore}</div><div class="card-sub">${roundScores[0].team}</div></div>
+    <div class="card"><div class="card-label">Prosjek kola</div><div class="card-value">${avg}</div><div class="card-sub">bodova po ekipi</div></div>
+    <div class="card"><div class="card-label">Ukupno bodova</div><div class="card-value">${totalPts}</div><div class="card-sub">svih 6 ekipa</div></div>
+    <div class="card"><div class="card-label">Lider nakon kola ${round}</div><div class="card-value" style="font-size:16px;color:var(--gold)">${totals[0].team}</div><div class="card-sub">${totals[0].total} ukupno</div></div>
+  `;
+
+  let html = '';
+  roundScores.forEach((item, rankInRound) => {
+    const totalRank = totals.findIndex(t => t.team === item.team) + 1;
+    const prevTotalRank = prevTotals.findIndex(t => t.team === item.team) + 1;
+    const rankChange = prevTotalRank - totalRank;
+    const cumTotal = getTeamTotal(item.team, round);
+    const isBest = item.score === bestScore;
+    const color = teamColor(item.team);
+    let chg = rankChange > 0 ? `<span style="color:var(--green)">↑${rankChange}</span>` : rankChange < 0 ? `<span style="color:var(--red)">↓${Math.abs(rankChange)}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+
+    html += `
+      <div class="rt-row">
+        <div style="font-weight:700;color:${rankInRound===0?'var(--gold)':'var(--text-muted)'}">${rankInRound+1}</div>
+        <div class="team-name"><div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>${item.team}</div>
+        <div style="text-align:right"><span class="score-pill ${isBest?'best':''}">${item.score}</span></div>
+        <div style="text-align:right;font-weight:600">${cumTotal}</div>
+        <div style="text-align:right">${rankInRound+1}</div>
+        <div style="text-align:right">${totalRank} ${chg}</div>
+      </div>`;
+  });
+  document.getElementById('round-table-rows').innerHTML = html;
+  document.getElementById('round-chart-title').textContent = `Bodovi u kolu ${round}`;
+
+  if (roundBarChart) { roundBarChart.destroy(); roundBarChart = null; }
+  const ctx = document.getElementById('chart-round-bar').getContext('2d');
+  const sorted = [...roundScores].sort((a,b) => TEAMS.indexOf(a.team) - TEAMS.indexOf(b.team));
+  roundBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(r => r.team),
+      datasets: [{ label: `Kolo ${round}`, data: sorted.map(r => r.score),
+        backgroundColor: sorted.map(r => teamColor(r.team)+'cc'),
+        borderColor: sorted.map(r => teamColor(r.team)),
+        borderWidth: 1, borderRadius: 6 }]
+    },
+    options: { ...chartOptions(), plugins: { legend: { display: false }, tooltip: tooltipStyle() }, scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } } } }
+  });
+}
+
+// ===================== FORMA =====================
+let formaChart = null;
+
+function renderFormaPage() {
+  const played = getPlayedRounds();
+  if (played < 1) {
+    document.getElementById('forma-cards').innerHTML = '<div style="color:var(--text-muted);padding:20px">Nema dovoljno odigranih kola.</div>';
+    return;
+  }
+  const formaCount = Math.min(5, played);
+  const formaStart = played - formaCount; // 0-indexed start
+  const formaRoundNums = Array.from({length: formaCount}, (_, i) => formaStart + i + 1); // 1-indexed
+
+  document.getElementById('forma-sub').textContent = `Zadnjih ${formaCount} odigranih kola (${formaRoundNums[0]}–${formaRoundNums[formaRoundNums.length-1]})`;
+  document.getElementById('forma-chart-title').textContent = `Forma — kola ${formaRoundNums[0]}–${formaRoundNums[formaRoundNums.length-1]}`;
+
+  const formaData = TEAMS.map(team => ({
+    team,
+    scores: formaRoundNums.map(r => SCORES[team][r-1] || 0),
+    total: formaRoundNums.reduce((a, r) => a + (SCORES[team][r-1] || 0), 0)
+  })).sort((a,b) => b.total - a.total);
+
+  const maxTotal = formaData[0].total;
+
+  let html = '';
+  formaData.forEach((item, rank) => {
+    const color = teamColor(item.team);
+    const maxScore = Math.max(...item.scores);
+    const barWidth = maxTotal > 0 ? Math.round((item.total / maxTotal) * 100) : 0;
+    html += `
+      <div class="forma-card">
+        <div class="forma-card-header">
+          <div class="forma-title">
+            <div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>
+            <div><div>${item.team}</div><div style="font-size:11px;color:var(--text-muted);font-weight:400">Rang u formi: #${rank+1}</div></div>
+          </div>
+          <div class="forma-total" style="color:${color}">${item.total}</div>
+        </div>
+        <div class="forma-rounds">
+          ${item.scores.map((s, i) => `
+            <div class="forma-round-box">
+              <div class="rnd">K${formaRoundNums[i]}</div>
+              <div class="pts" style="color:${s===maxScore?color:'var(--text)'}">${s}</div>
+            </div>`).join('')}
+        </div>
+        <div class="rank-bar" style="margin-top:12px"><div class="rank-bar-fill" style="width:${barWidth}%;background:${color}"></div></div>
+      </div>`;
+  });
+  document.getElementById('forma-cards').innerHTML = html;
+
+  if (formaChart) { formaChart.destroy(); formaChart = null; }
+  const ctx = document.getElementById('chart-forma').getContext('2d');
+  formaChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: formaRoundNums.map(r => `Kolo ${r}`),
+      datasets: TEAMS.map((team, i) => ({
+        label: team,
+        data: formaRoundNums.map(r => SCORES[team][r-1] || 0),
+        backgroundColor: TEAM_COLORS[i]+'bb', borderColor: TEAM_COLORS[i],
+        borderWidth: 1, borderRadius: 4
+      }))
+    },
+    options: { ...chartOptions({ interaction: { mode: 'index', intersect: false } }), scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } } } }
+  });
+}
+
+// ===================== GRAFOVI =====================
+function renderRankChart() {
+  const played = getPlayedRounds();
+  if (!played) return;
+  const ctx = document.getElementById('chart-rank').getContext('2d');
+  const labels = Array.from({length: played}, (_, i) => `K${i+1}`);
+  charts['chart-rank'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: TEAMS.map((team, i) => ({
+        label: team,
+        data: Array.from({length: played}, (_, r) => getAllTotals(r+1).findIndex(t => t.team === team) + 1),
+        borderColor: TEAM_COLORS[i], backgroundColor: 'transparent',
+        borderWidth: 2.5, tension: 0.3, pointRadius: 2, pointHoverRadius: 5
+      }))
+    },
+    options: {
+      ...chartOptions({ interaction: { mode: 'index', intersect: false } }),
+      scales: {
+        x: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } },
+        y: { reverse: true, min: 1, max: 6, ticks: { color: '#94a3b8', stepSize: 1, callback: v => `#${v}` }, grid: { color: '#2e3350' } }
+      }
+    }
+  });
+}
+
+function renderAllRoundsChart() {
+  const played = getPlayedRounds();
+  if (!played) return;
+  const ctx = document.getElementById('chart-all-rounds').getContext('2d');
+  const labels = Array.from({length: played}, (_, i) => `K${i+1}`);
+  charts['chart-all-rounds'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: TEAMS.map((team, i) => ({
+        label: team,
+        data: SCORES[team].slice(0, played),
+        borderColor: TEAM_COLORS[i], backgroundColor: TEAM_COLORS[i]+'18',
+        borderWidth: 2, tension: 0.3, fill: false, pointRadius: 3, pointHoverRadius: 5
+      }))
+    },
+    options: { ...chartOptions({ interaction: { mode: 'index', intersect: false } }), scales: { x: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } } } }
+  });
+}
+
+// ===================== STATISTIKE =====================
+function renderStatsPage() {
+  const played = getPlayedRounds();
+  if (!played) { document.getElementById('stats-tbody').innerHTML = ''; return; }
+  const totals = getAllTotals(played);
+
+  let html = '';
+  totals.forEach((item, rank) => {
+    const scores = SCORES[item.team].slice(0, played).filter(v => v !== null);
+    const avg = (item.total / scores.length).toFixed(1);
+    const min = Math.min(...scores);
+    const max = Math.max(...scores);
+    const omega = getOmegaWins(item.team);
+    const color = teamColor(item.team);
+    const sparkMax = Math.max(...scores);
+    const sparkBars = scores.map(s => `<div class="spark-bar" style="height:${Math.max(4,Math.round((s/sparkMax)*32))}px;background:${color}"></div>`).join('');
+    const rankColors = ['var(--gold)','var(--silver)','var(--bronze)'];
+
+    html += `<tr>
+      <td style="font-weight:700;color:${rank<3?rankColors[rank]:'var(--text-muted)'}">${rank+1}</td>
+      <td><div class="team-name"><div class="team-badge" style="background:${color}22;color:${color};width:28px;height:28px;font-size:10px">${TEAM_INITIALS[item.team]}</div>${item.team}</div></td>
+      <td style="font-weight:700">${item.total}</td>
+      <td>${avg}</td>
+      <td style="color:var(--red)">${min}</td>
+      <td style="color:var(--green)">${max}</td>
+      <td>${omega > 0 ? `<span class="omega-badge">Ω${omega}</span>` : '—'}</td>
+      <td><div class="sparkline">${sparkBars}</div></td>
+    </tr>`;
+  });
+  document.getElementById('stats-tbody').innerHTML = html;
+
+  if (charts['chart-dist']) { charts['chart-dist'].destroy(); delete charts['chart-dist']; }
+  const ctx = document.getElementById('chart-dist').getContext('2d');
+  const teamsSorted = totals.map(t => t.team);
+  charts['chart-dist'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: teamsSorted,
+      datasets: [{
+        label: 'Prosjek bodova/kolu',
+        data: teamsSorted.map(t => { const s = SCORES[t].slice(0,played).filter(v=>v!==null); return parseFloat((s.reduce((a,b)=>a+b,0)/s.length).toFixed(1)); }),
+        backgroundColor: teamsSorted.map(t => teamColor(t)+'cc'),
+        borderColor: teamsSorted.map(t => teamColor(t)),
+        borderWidth: 1, borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#e2e8f0' } }, tooltip: { ...tooltipStyle(), callbacks: { afterLabel: ctx => { const t = ctx.label; const s = SCORES[t].slice(0,played).filter(v=>v!==null); return [`Min: ${Math.min(...s)}`, `Max: ${Math.max(...s)}`, `Ukupno: ${s.reduce((a,b)=>a+b,0)}`]; } } } },
+      scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } } }
+    }
+  });
+}
+
+// ===================== CHART HELPERS =====================
+function tooltipStyle() {
+  return { backgroundColor: '#1a1d27', borderColor: '#2e3350', borderWidth: 1, titleColor: '#e2e8f0', bodyColor: '#94a3b8' };
+}
+
+function chartOptions(extra = {}) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: '#e2e8f0', font: { size: 12 } } },
+      tooltip: tooltipStyle()
+    },
+    ...extra
+  };
+}
+</script>
+</body>
+</html>
