@@ -147,6 +147,14 @@
         }
         .btn-hero-outline:hover { background: rgba(255,255,255,.12); }
 
+        /* Google Play badge */
+        .gplay-badge {
+            display: inline-block;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .gplay-badge:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+        .gplay-badge img { height: 56px; width: auto; display: block; }
+
         /* App icon graphic */
         .hero-graphic { position: relative; z-index: 1; }
         .hero-app-icon {
@@ -416,7 +424,12 @@
             <h1>Your Complete<br>Pokémon GO Tracker</h1>
             <p>Track every Pokémon you've caught — regular, shiny, lucky, event-exclusive, and regional forms — all in one place.</p>
             <div class="hero-actions">
-                <span class="btn btn-hero">Coming Soon on Google Play</span>
+                <a class="gplay-badge"
+                   href="https://play.google.com/store/apps/details?id=com.sandanapps.pogodex"
+                   target="_blank" rel="noopener">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                         alt="Get it on Google Play" />
+                </a>
             </div>
         </div>
         <div class="hero-graphic">
@@ -638,7 +651,7 @@
         </div>
 
         <div style="text-align:center; margin-top:48px;">
-            <p style="font-size:.95rem; color:#64748b; margin-bottom:20px;">If you enjoy using PogoDex, consider buying me a coffee ☕</p>
+            <p style="font-size:.95rem; color:#64748b; margin-bottom:20px;">If you enjoy using PogoDex, consider buying us a coffee ☕</p>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
                 data-name="bmc-button"
                 data-slug="sandan.apps"
