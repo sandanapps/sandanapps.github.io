@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SanDan.apps — a small team building thoughtful mobile applications." />
+    <title>SanDan.apps</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:        #0d1117;
+            --surface:   #161b22;
+            --border:    rgba(255,255,255,.08);
+            --text:      #e6edf3;
+            --muted:     #8b949e;
+            --accent:    #58a6ff;
+            --radius:    20px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── Layout ── */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── Nav ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13,17,23,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+        }
+        .nav-brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: .02em;
+            color: var(--text);
+        }
+        .nav-brand span { color: var(--accent); }
+        .nav-email {
+            font-size: .85rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .15s;
+        }
+        .nav-email:hover { color: var(--accent); }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-bmc {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            background: #FFDD00;
+            padding: 6px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity .15s;
+            white-space: nowrap;
+        }
+        .nav-bmc:hover { opacity: .85; }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* subtle radial glow */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -120px; left: 50%;
+            transform: translateX(-50%);
+            width: 700px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(88,166,255,.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(88,166,255,.1);
+            border: 1px solid rgba(88,166,255,.25);
+            padding: 5px 14px;
+            border-radius: 40px;
+            margin-bottom: 28px;
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 0;
+            line-height: 1.7;
+        }
+
+        /* ── Apps section ── */
+        .apps { padding: 48px 0 100px; }
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* App card */
+        .app-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            transition: border-color .2s, transform .2s, box-shadow .2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .app-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .2s;
+            pointer-events: none;
+        }
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,.4);
+        }
+
+        /* IVF card accent */
+        .app-card.ivf { --card-color: #e879a0; }
+        .app-card.ivf::before { background: radial-gradient(ellipse at top left, rgba(232,121,160,.08), transparent 65%); }
+        .app-card.ivf:hover { border-color: rgba(232,121,160,.4); }
+        .app-card.ivf::before { opacity: 1; }
+
+        /* PokéDex card accent */
+        .app-card.poke { --card-color: #38bdf8; }
+        .app-card.poke::before { background: radial-gradient(ellipse at top left, rgba(56,189,248,.08), transparent 65%); }
+        .app-card.poke:hover { border-color: rgba(56,189,248,.4); }
+        .app-card.poke::before { opacity: 1; }
+
+        .app-icon {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .app-card.ivf  .app-icon { background: rgba(232,121,160,.15); }
+        .app-card.poke .app-icon { background: rgba(56,189,248,.15); }
+
+        .app-badge {
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 20px;
+            align-self: flex-start;
+        }
+        .app-card.ivf  .app-badge { background: rgba(232,121,160,.15); color: #f093b9; }
+        .app-card.poke .app-badge { background: rgba(56,189,248,.15);  color: #67d0fc; }
+
+        .app-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: -.01em;
+            margin-bottom: 6px;
+        }
+        .app-desc {
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.65;
+            flex: 1;
+        }
+        .app-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .875rem;
+            font-weight: 600;
+            color: var(--card-color);
+            margin-top: 4px;
+            transition: gap .15s;
+        }
+        .app-card:hover .app-cta { gap: 12px; }
+        .app-cta svg { flex-shrink: 0; }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            text-align: center;
+        }
+        footer p {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 560px) {
+            .hero { padding: 72px 0 56px; }
+            .apps-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container nav-inner">
+        <div class="nav-brand">SanDan<span>.apps</span></div>
+        <div class="nav-right">
+            <a class="nav-email" href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a>
+            <a class="nav-bmc" href="https://buymeacoffee.com/sandan.apps" target="_blank" rel="noopener">☕ Buy us a coffee</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-eyebrow">Our apps</div>
+        <h1>Built with care<br>by <span>SanDan</span></h1>
+        <p class="hero-sub">A small team crafting thoughtful mobile apps — practical, private, and polished.</p>
+    </div>
+</section>
+
+<!-- Apps -->
+<section class="apps">
+    <div class="container">
+        <div class="apps-grid">
+
+            <!-- IVF Diary -->
+            <a class="app-card ivf" href="IVFDiary/index.html">
+                <div class="app-icon">
+                    <svg width="44" height="44" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="54" cy="54" r="54" fill="#B0D4F1"/>
+                        <path fill="#D4849A"
+                            d="M54,77 C54,77 29,61 29,46 C29,37 35,31 43,31 C47.5,31 51.5,33 54,36 C56.5,33 60.5,31 65,31 C73,31 79,37 79,46 C79,61 54,77 54,77Z"/>
+                        <path fill="#FFB6C1"
+                            d="M54,74 C54,74 32,59 32,46 C32,38 37,33 44,33 C48,33 52,35 54,38 C56,35 60,33 64,33 C71,33 76,38 76,46 C76,59 54,74 54,74Z"/>
+                        <path fill="#FFDDE3"
+                            d="M44,34 C39,35 34,39 33,45 C39,38 48,36 54,39 C52,35 48,34 44,34Z"/>
+                        <circle cx="54" cy="53" r="8" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+                        <circle cx="57.7" cy="56.7" r="2.8" fill="#FFFFFF"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="app-badge">Health</span>
+                    <h2 class="app-title">IVF Diary</h2>
+                    <p class="app-desc">Your personal assistant for tracking IVF treatment — cycles, medications, calendar events, beta results, and a private diary. Free, offline, and built with privacy in mind.</p>
+                </div>
+                <span class="app-cta">
+                    Learn more
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </span>
+            </a>
+
+            <!-- PogoDex -->
+            <a class="app-card poke" href="PogoDex/index.html">
+                <div class="app-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="44" height="44"
+                      style="border-radius:8px;flex-shrink:0;display:block">
+                        <path fill="#EF5350" d="M20,0 L80,0 Q100,0 100,20 L100,80 Q100,100 80,100 L20,100 Q0,100 0,80 L0,20 Q0,0 20,0 Z"/>
+                        <clipPath id="nc"><path d="M0,50 L100,50 L100,80 Q100,100 80,100 L20,100 Q0,100 0,80 Z"/></clipPath>
+                        <path fill="#C62828" d="M0,50 L100,50 L100,100 L0,100 Z" clip-path="url(#nc)"/>
+                        <path fill="#29B6F6" d="M0,44 L100,44 L100,56 L0,56 Z"/>
+                        <path fill="rgba(255,255,255,0.25)" d="M0,44 L100,44 L100,50 L0,50 Z"/>
+                        <circle fill="#B71C1C" cx="28" cy="25" r="13"/>
+                        <circle fill="#EF9A9A" cx="28" cy="25" r="9"/>
+                        <circle fill="#E3F2FD" cx="28" cy="25" r="6"/>
+                        <circle fill="rgba(255,255,255,0.67)" cx="24" cy="21" r="2.5"/>
+                        <circle fill="#FF5252" cx="66" cy="16" r="3.5"/>
+                        <circle fill="#FFD740" cx="76" cy="16" r="3.5"/>
+                        <circle fill="#69F0AE" cx="86" cy="16" r="3.5"/>
+                        <path fill="#FFD740" d="M18,70 L27,76 L18,82 Z"/>
+                        <path fill="#B71C1C" d="M33,79 L82,79 L82,83 L33,83 Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="app-badge">Gaming</span>
+                    <h2 class="app-title">PogoDex</h2>
+                    <p class="app-desc">Your complete Pokémon GO collection tracker — regular, shiny, lucky, event, and regional forms all in one place. No login, no cloud, 100% offline.</p>
+                </div>
+                <span class="app-cta">
+                    Learn more
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </span>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2026 SanDan.apps &nbsp;&middot;&nbsp; <a href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a></p>
+    </div>
+</footer>
+
+</body>
+</html>
