@@ -134,10 +134,10 @@
 </div>
 
 <div class="content">
-    <span class="last-updated">Last updated: March 2026</span>
+    <span class="last-updated">Last updated: April 2026</span>
 
     <div class="highlight-box">
-        <p><strong>Short version:</strong> PogoDex does not collect, store, or transmit any personal information from you to us. Your Pokémon collection data stays on your device. The app does display ads via Google AdMob, which may collect certain device identifiers as described below.</p>
+        <p><strong>Short version:</strong> PogoDex stores your collection data locally on your device. You may optionally sign in with your Google account to enable cloud sync via Firebase — in that case your collection and in-game name are stored in Google's cloud. The app also displays ads via Google AdMob. We never sell your data.</p>
     </div>
 
     <section>
@@ -148,13 +148,24 @@
 
     <section>
         <h2>2. Data We Collect</h2>
-        <p>PogoDex itself does <strong>not</strong> collect any personally identifiable information. Specifically:</p>
+        <p>PogoDex operates in two modes:</p>
+
+        <p><strong>Without an account (default):</strong></p>
         <ul>
-            <li>We do not require you to create an account or log in.</li>
+            <li>No account or login is required.</li>
+            <li>Your Pokémon collection progress is stored <strong>locally on your device only</strong> using Android's Room database. This data never leaves your device unless you explicitly use the Export feature or enable cloud sync.</li>
             <li>We do not collect your name, email address, or any other personal details.</li>
-            <li>Your Pokémon collection progress (caught Pokémon, caught status) is stored <strong>locally on your device only</strong> using Android's Room database. This data never leaves your device unless you explicitly use the Export feature to create a backup file.</li>
             <li>We do not use crash reporting or analytics SDKs.</li>
         </ul>
+
+        <p><strong>With Google Sign-In (optional):</strong></p>
+        <p>If you choose to sign in with your Google account, the following data is collected and stored in <strong>Google Firebase</strong> (Cloud Firestore), associated with your Google account UID:</p>
+        <ul>
+            <li><strong>In-game name (IGN)</strong> — the nickname you choose to enter in the app.</li>
+            <li><strong>Pokémon collection progress</strong> — which Pokémon you have marked as caught, including timestamps.</li>
+        </ul>
+        <p>We access your Google account only to authenticate you (via Google Sign-In). We do not access your Google contacts, Gmail, calendar, or any other Google data beyond your basic profile (name and email address used solely for authentication).</p>
+        <p>Google Sign-In and Firebase are services provided by Google LLC. Their use is governed by <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</p>
     </section>
 
     <section>
@@ -192,19 +203,19 @@
         <h2>5. Permissions</h2>
         <p>The app requests the following Android permission:</p>
         <ul>
-            <li><strong>INTERNET</strong> — required to fetch Pokémon data and sprites from external sources, and to load advertisements.</li>
+            <li><strong>INTERNET</strong> — required to fetch Pokémon data and sprites from external sources, to load advertisements, and (if signed in) to sync your collection with Firebase.</li>
         </ul>
         <p>No other permissions (camera, microphone, contacts, location, storage) are requested.</p>
     </section>
 
     <section>
         <h2>6. Data Retention and Deletion</h2>
-        <p>All locally stored data (your Pokémon collection) can be deleted at any time by:</p>
+        <p><strong>Local data</strong> can be deleted at any time by:</p>
         <ul>
             <li>Going to <em>Android Settings → Apps → PogoDex → Storage → Clear Data</em>, or</li>
             <li>Uninstalling the application.</li>
         </ul>
-        <p>We do not hold any of your data on our servers, so there is nothing for us to delete on our end.</p>
+        <p><strong>Cloud data</strong> (if you have signed in): signing out of the app stops further syncing, but does not automatically delete existing cloud data. To request permanent deletion of your cloud data (collection and IGN stored in Firebase), please contact us at <a href="mailto:sandan.apps@gmail.com">sandan.apps@gmail.com</a> and we will delete your data within 30 days.</p>
     </section>
 
     <section>
