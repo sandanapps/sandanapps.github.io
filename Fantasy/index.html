@@ -87,12 +87,49 @@
   .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 32px; }
   .spark-bar { border-radius: 2px; min-width: 4px; opacity: 0.7; }
 
+  /* ===== NAGRADE ===== */
+  .awards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .award-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .award-card.highlight { border-color: var(--gold); background: linear-gradient(135deg, rgba(251,191,36,0.07) 0%, var(--surface) 100%); }
+  .award-card.highlight2 { border-color: var(--silver); }
+  .award-card.highlight3 { border-color: var(--bronze); }
+  .award-card.cup { border-color: var(--accent2); background: linear-gradient(135deg, rgba(168,85,247,0.07) 0%, var(--surface) 100%); }
+  .award-icon { font-size: 28px; line-height: 1; }
+  .award-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
+  .award-winner { font-size: 18px; font-weight: 800; }
+  .award-detail { font-size: 13px; color: var(--text-muted); }
+  .award-prize { font-size: 13px; color: var(--gold); font-weight: 600; margin-top: 2px; }
+  .award-prize.cup-prize { color: var(--accent2); }
+  .award-prize.empty { color: var(--text-muted); font-style: italic; font-weight: 400; }
+  .awards-section-title { font-size: 15px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 28px 0 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+  /* ===== KUP ===== */
+  .cup-info-bar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .cup-badge { background: var(--accent2); color: white; border-radius: 8px; padding: 6px 16px; font-weight: 700; font-size: 13px; }
+  .cup-bracket { display: flex; gap: 0; align-items: flex-start; overflow-x: auto; padding-bottom: 16px; }
+  .cup-round-col { display: flex; flex-direction: column; min-width: 220px; }
+  .cup-round-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 16px 12px 16px; }
+  .cup-connector { display: flex; align-items: center; }
+  .cup-match { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin: 6px 12px; overflow: hidden; }
+  .cup-match.pending { border-color: var(--border); }
+  .cup-match.done { border-color: var(--accent2); }
+  .cup-team-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .cup-team-row:last-child { border-bottom: none; }
+  .cup-team-row.winner { background: rgba(168,85,247,0.12); }
+  .cup-team-row.loser { opacity: 0.45; }
+  .cup-team-row.bye { opacity: 0.5; font-style: italic; }
+  .cup-score { margin-left: auto; font-weight: 700; font-size: 15px; min-width: 32px; text-align: right; }
+  .cup-score.win { color: var(--accent2); }
+  .cup-round-label { font-size: 11px; font-weight: 700; color: var(--accent2); text-align: center; padding: 4px 14px; background: rgba(168,85,247,0.1); }
+  .cup-empty { color: var(--text-muted); padding: 40px 24px; font-size: 15px; }
+
   @media(max-width: 768px) {
     .lb-header, .lb-row { grid-template-columns: 36px 1fr 70px 60px; }
     .lb-header > *:nth-child(n+5), .lb-row > *:nth-child(n+5) { display: none; }
     .rt-header, .rt-row { grid-template-columns: 36px 1fr 80px 80px; }
     .rt-header > *:nth-child(n+5), .rt-row > *:nth-child(n+5) { display: none; }
     .round-slider { width: 180px; }
+    .cup-round-col { min-width: 180px; }
   }
 </style>
 </head>
@@ -101,10 +138,12 @@
 <nav class="nav">
   <div class="nav-logo">Fantasy <span>25/26</span></div>
   <div class="nav-tab active" onclick="showPage('ljestvica', this)">Ljestvica</div>
+  <div class="nav-tab" onclick="showPage('kup', this)">Kup</div>
   <div class="nav-tab" onclick="showPage('kolo', this)">Po kolima</div>
   <div class="nav-tab" onclick="showPage('forma', this)">Forma</div>
   <div class="nav-tab" onclick="showPage('grafovi', this)">Grafovi</div>
   <div class="nav-tab" onclick="showPage('statistike', this)">Statistike</div>
+  <div class="nav-tab" onclick="showPage('nagrade', this)">Nagrade</div>
 </nav>
 
 <div class="main">
@@ -198,6 +237,20 @@
     </div>
   </div>
 
+  <!-- NAGRADE -->
+  <div class="page" id="page-nagrade">
+    <div class="section-title">Nagrade</div>
+    <div class="section-sub">Pobjednici i rekorderi sezone</div>
+    <div id="nagrade-content"></div>
+  </div>
+
+  <!-- KUP -->
+  <div class="page" id="page-kup">
+    <div class="section-title">Kup natjecanje</div>
+    <div class="section-sub" id="kup-sub">Knockout format — bodovi ostvareni u kolu kupa</div>
+    <div id="kup-content"></div>
+  </div>
+
 </div>
 
 <script>
@@ -207,6 +260,8 @@ let MAX_ROUNDS = 36;
 let TEAM_COLORS = [];
 let TEAM_INITIALS = {};
 let SCORES = {};
+let CUP = { start_round: 34, rounds: [] };
+let AWARDS = { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
 
 function getPlayedRounds() {
   // Broj kola gdje SVI igrači imaju bodove
@@ -275,6 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         SCORES[t] = Array(MAX_ROUNDS).fill(null);
         if (data.scores[t]) data.scores[t].forEach((v, i) => { if (v !== null && v !== undefined) SCORES[t][i] = v; });
       });
+      CUP = data.cup || { start_round: 34, rounds: [] };
+      AWARDS = data.awards || { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
       renderAll();
     })
     .catch(() => {
@@ -301,6 +358,8 @@ function renderAll() {
   rebuildChart('chart-rank', renderRankChart);
   rebuildChart('chart-all-rounds', renderAllRoundsChart);
   renderStatsPage();
+  renderNagradePage();
+  renderKupPage();
 }
 
 function rebuildChart(id, fn) {
@@ -658,6 +717,283 @@ function renderStatsPage() {
       scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#2e3350' }, ticks: { color: '#94a3b8' } } }
     }
   });
+}
+
+// ===================== NAGRADE =====================
+function getCupWinner() {
+  if (!CUP || !CUP.rounds || CUP.rounds.length === 0) return null;
+  const finalRound = CUP.rounds[CUP.rounds.length - 1];
+  if (!finalRound || finalRound.length === 0) return null;
+  const finalMatch = finalRound[0];
+  if (!finalMatch) return null;
+  const finalRoundNum = CUP.start_round + CUP.rounds.length - 1;
+  return getMatchWinner(finalMatch, finalRoundNum);
+}
+
+function renderNagradePage() {
+  const el = document.getElementById('nagrade-content');
+  const played = getPlayedRounds();
+  if (!played) {
+    el.innerHTML = `<div style="color:var(--text-muted);padding:20px">Nema odigranih kola.</div>`;
+    return;
+  }
+
+  const totals = getAllTotals(played);
+  const leader = totals[0];
+  const second = totals[1];
+  const third = totals[2];
+
+  // Kup pobjednik
+  const cupWinner = getCupWinner();
+
+  // Ekipa s najviše Ω pobjeda
+  const omegaData = TEAMS.map(t => ({ team: t, wins: getOmegaWins(t) })).sort((a, b) => b.wins - a.wins);
+  const topOmega = omegaData[0];
+
+  // Rekord — max bodova u jednom kolu
+  let maxRoundScore = { team: '', score: 0, round: 0 };
+  let minRoundScore = { team: '', score: Infinity, round: 0 };
+  TEAMS.forEach(t => {
+    SCORES[t].forEach((s, i) => {
+      if (s === null || i >= played) return;
+      if (s > maxRoundScore.score) maxRoundScore = { team: t, score: s, round: i + 1 };
+      if (s < minRoundScore.score) minRoundScore = { team: t, score: s, round: i + 1 };
+    });
+  });
+
+  // Kolo s najviše / najmanje ukupnih bodova (prosjek po ekipi)
+  let bestRound = { round: 0, avg: 0 };
+  let worstRound = { round: 0, avg: Infinity };
+  for (let r = 0; r < played; r++) {
+    const scores = TEAMS.map(t => SCORES[t][r]).filter(v => v !== null);
+    if (!scores.length) continue;
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    if (avg > bestRound.avg) bestRound = { round: r + 1, avg };
+    if (avg < worstRound.avg) worstRound = { round: r + 1, avg };
+  }
+
+  function prizeHtml(prize, cls = '') {
+    if (!prize) return `<div class="award-prize empty ${cls}">Nagrada nije unesena</div>`;
+    return `<div class="award-prize ${cls}">${prize}</div>`;
+  }
+
+  function badge(team) {
+    const color = teamColor(team);
+    return `<div class="team-badge" style="background:${color}22;color:${color};width:32px;height:32px;font-size:11px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-weight:800;margin-right:8px;flex-shrink:0">${TEAM_INITIALS[team]}</div>`;
+  }
+
+  let html = '';
+
+  // --- Ljestvica ---
+  html += `<div class="awards-section-title">Završnica ljestvice</div>`;
+  html += `<div class="awards-grid">`;
+
+  html += `<div class="award-card highlight">
+    <div class="award-icon">🥇</div>
+    <div class="award-label">1. mjesto — Prvak</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(leader.team)}${leader.team}</div>
+    <div class="award-detail">${leader.total} bodova ukupno</div>
+    ${prizeHtml(AWARDS.prize_1st)}
+  </div>`;
+
+  if (second) html += `<div class="award-card highlight2">
+    <div class="award-icon">🥈</div>
+    <div class="award-label">2. mjesto</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(second.team)}${second.team}</div>
+    <div class="award-detail">${second.total} bodova · ${leader.total - second.total} iza prvog</div>
+    ${prizeHtml(AWARDS.prize_2nd)}
+  </div>`;
+
+  if (third) html += `<div class="award-card highlight3">
+    <div class="award-icon">🥉</div>
+    <div class="award-label">3. mjesto</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(third.team)}${third.team}</div>
+    <div class="award-detail">${third.total} bodova · ${leader.total - third.total} iza prvog</div>
+    ${prizeHtml(AWARDS.prize_3rd)}
+  </div>`;
+
+  html += `</div>`;
+
+  // --- Kup ---
+  html += `<div class="awards-section-title">Kup natjecanje</div>`;
+  html += `<div class="awards-grid">`;
+  if (cupWinner) {
+    html += `<div class="award-card cup">
+      <div class="award-icon">🏆</div>
+      <div class="award-label">Pobjednik kupa</div>
+      <div class="award-winner" style="display:flex;align-items:center">${badge(cupWinner)}${cupWinner}</div>
+      <div class="award-detail">Kup ${CUP.start_round}–${CUP.start_round + CUP.rounds.length - 1}. kolo</div>
+      ${prizeHtml(AWARDS.prize_cup, 'cup-prize')}
+    </div>`;
+  } else {
+    html += `<div class="award-card cup">
+      <div class="award-icon">🏆</div>
+      <div class="award-label">Pobjednik kupa</div>
+      <div class="award-winner" style="color:var(--text-muted);font-size:15px">Još nije određen</div>
+      <div class="award-detail">Kup se igra od kola ${CUP.start_round || '?'}</div>
+      ${prizeHtml(AWARDS.prize_cup, 'cup-prize')}
+    </div>`;
+  }
+  html += `</div>`;
+
+  // --- Statistički rekordi ---
+  html += `<div class="awards-section-title">Rekordi sezone</div>`;
+  html += `<div class="awards-grid">`;
+
+  // Najviše Ω pobjeda
+  html += `<div class="award-card">
+    <div class="award-icon">⚡</div>
+    <div class="award-label">Najviše pobjeda u kolu (Ω)</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(topOmega.team)}${topOmega.team}</div>
+    <div class="award-detail">${topOmega.wins} ${topOmega.wins === 1 ? 'pobjeda' : topOmega.wins < 5 ? 'pobjede' : 'pobjeda'} u kolu</div>
+  </div>`;
+
+  // Max bodova u jednom kolu
+  html += `<div class="award-card">
+    <div class="award-icon">📈</div>
+    <div class="award-label">Najviše bodova u jednom kolu</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(maxRoundScore.team)}${maxRoundScore.team}</div>
+    <div class="award-detail">${maxRoundScore.score} bodova · kolo ${maxRoundScore.round}</div>
+  </div>`;
+
+  // Min bodova u jednom kolu
+  html += `<div class="award-card">
+    <div class="award-icon">📉</div>
+    <div class="award-label">Najmanje bodova u jednom kolu</div>
+    <div class="award-winner" style="display:flex;align-items:center">${badge(minRoundScore.team)}${minRoundScore.team}</div>
+    <div class="award-detail">${minRoundScore.score} bodova · kolo ${minRoundScore.round}</div>
+  </div>`;
+
+  // Kolo s najviše ukupnih bodova
+  html += `<div class="award-card">
+    <div class="award-icon">🔥</div>
+    <div class="award-label">Kolo s najviše ukupnih bodova</div>
+    <div class="award-winner" style="font-size:22px;font-weight:800;color:var(--accent)">Kolo ${bestRound.round}</div>
+    <div class="award-detail">Prosjek ${bestRound.avg.toFixed(1)} bod/ekipi · ukupno ${Math.round(bestRound.avg * TEAMS.length)}</div>
+  </div>`;
+
+  // Kolo s najmanje ukupnih bodova
+  html += `<div class="award-card">
+    <div class="award-icon">❄️</div>
+    <div class="award-label">Kolo s najmanje ukupnih bodova</div>
+    <div class="award-winner" style="font-size:22px;font-weight:800;color:var(--text-muted)">Kolo ${worstRound.round}</div>
+    <div class="award-detail">Prosjek ${worstRound.avg.toFixed(1)} bod/ekipi · ukupno ${Math.round(worstRound.avg * TEAMS.length)}</div>
+  </div>`;
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+// ===================== KUP =====================
+function cupRoundName(roundIdx, totalRounds) {
+  const remaining = totalRounds - roundIdx;
+  if (remaining === 1) return 'Finale';
+  if (remaining === 2) return 'Polufinale';
+  if (remaining === 3) return 'Četvrtfinale';
+  return `Runda ${roundIdx + 1}`;
+}
+
+function getMatchWinner(match, roundNum) {
+  const { team1, team2 } = match;
+  if (!team1 && !team2) return null;
+  if (!team2) return team1; // BYE
+  if (!team1) return team2; // BYE
+  const played = getPlayedRounds();
+  if (roundNum > played) return null;
+  const s1 = SCORES[team1] ? SCORES[team1][roundNum - 1] : null;
+  const s2 = SCORES[team2] ? SCORES[team2][roundNum - 1] : null;
+  if (s1 === null || s2 === null) return null;
+  if (s1 > s2) return team1;
+  if (s2 > s1) return team2;
+  const t1 = getTeamTotal(team1, roundNum);
+  const t2 = getTeamTotal(team2, roundNum);
+  return t1 >= t2 ? team1 : team2;
+}
+
+function renderKupPage() {
+  const el = document.getElementById('kup-content');
+  const hasMatches = CUP && CUP.rounds && CUP.rounds.some(r => r.length > 0);
+
+  if (!hasMatches) {
+    el.innerHTML = `<div class="cup-empty">Kup natjecanje još nije počelo.</div>`;
+    document.getElementById('kup-sub').textContent = `Kup — početak od kola ${CUP.start_round || '?'}`;
+    return;
+  }
+
+  document.getElementById('kup-sub').textContent =
+    `Kup — počinje od kola ${CUP.start_round} · Neriješeno → više sezonskih bodova prolazi`;
+
+  const played = getPlayedRounds();
+  const totalRounds = CUP.rounds.length;
+  let html = '<div class="cup-bracket">';
+
+  CUP.rounds.forEach((round, roundIdx) => {
+    if (round.length === 0) return;
+    const roundNum = CUP.start_round + roundIdx;
+    const isPlayed = roundNum <= played;
+    const roundName = cupRoundName(roundIdx, totalRounds);
+
+    html += `<div class="cup-round-col">
+      <div class="cup-round-title">${roundName}<br><span style="font-weight:400;color:var(--text-muted);font-size:11px">Kolo ${roundNum}${isPlayed ? '' : ' (nije odigrano)'}</span></div>`;
+
+    round.forEach(match => {
+      const { team1, team2 } = match;
+
+      if (!team1 && !team2) {
+        html += `<div class="cup-match"><div class="cup-round-label">${roundName}</div>
+          <div class="cup-team-row"><span style="color:var(--text-muted);font-size:13px;padding:0 4px">Čeka se par</span></div>
+          <div class="cup-team-row"><span style="color:var(--text-muted);font-size:13px;padding:0 4px">Čeka se par</span></div></div>`;
+        return;
+      }
+
+      if (!team1 || !team2) {
+        const real = team1 || team2;
+        const color = teamColor(real);
+        html += `<div class="cup-match done">
+          <div class="cup-round-label">${roundName}</div>
+          <div class="cup-team-row winner">
+            <div class="team-badge" style="background:${color}22;color:${color};width:26px;height:26px;font-size:10px;flex-shrink:0">${TEAM_INITIALS[real]}</div>
+            <span style="font-size:14px;font-weight:600">${real}</span>
+            <span class="cup-score" style="color:var(--green);font-size:12px">BYE</span>
+          </div>
+          <div class="cup-team-row bye">
+            <div class="team-badge" style="background:#2e335022;color:#94a3b8;width:26px;height:26px;font-size:10px;flex-shrink:0">—</div>
+            <span style="font-size:14px">BYE</span>
+          </div></div>`;
+        return;
+      }
+
+      const s1 = isPlayed && SCORES[team1] ? SCORES[team1][roundNum - 1] : null;
+      const s2 = isPlayed && SCORES[team2] ? SCORES[team2][roundNum - 1] : null;
+      const winner = getMatchWinner(match, roundNum);
+      const isDone = winner !== null;
+      const color1 = teamColor(team1);
+      const color2 = teamColor(team2);
+      const tie = isDone && s1 !== null && s1 === s2;
+      const tieNote = tie
+        ? `<div style="font-size:10px;color:var(--text-muted);padding:3px 14px;background:rgba(168,85,247,0.05)">Neriješeno — ${winner} prolazi (više sez. bodova)</div>`
+        : '';
+
+      html += `<div class="cup-match ${isDone ? 'done' : ''}">
+        <div class="cup-round-label">${roundName}</div>
+        <div class="cup-team-row ${isDone ? (winner === team1 ? 'winner' : 'loser') : ''}">
+          <div class="team-badge" style="background:${color1}22;color:${color1};width:26px;height:26px;font-size:10px;flex-shrink:0">${TEAM_INITIALS[team1]}</div>
+          <span style="font-size:14px;font-weight:600">${team1}</span>
+          <span class="cup-score ${s1 !== null && s1 > s2 ? 'win' : ''}">${s1 !== null ? s1 : '—'}</span>
+        </div>
+        <div class="cup-team-row ${isDone ? (winner === team2 ? 'winner' : 'loser') : ''}">
+          <div class="team-badge" style="background:${color2}22;color:${color2};width:26px;height:26px;font-size:10px;flex-shrink:0">${TEAM_INITIALS[team2]}</div>
+          <span style="font-size:14px;font-weight:600">${team2}</span>
+          <span class="cup-score ${s2 !== null && s2 > s1 ? 'win' : ''}">${s2 !== null ? s2 : '—'}</span>
+        </div>
+        ${tieNote}</div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  html += '</div>';
+  el.innerHTML = html;
 }
 
 // ===================== CHART HELPERS =====================

@@ -32,6 +32,16 @@
       "initials": "SHG"
     }
   ],
+  "cup": {
+    "start_round": 34,
+    "rounds": []
+  },
+  "awards": {
+    "prize_1st": "",
+    "prize_2nd": "",
+    "prize_3rd": "",
+    "prize_cup": ""
+  },
   "scores": {
     "NK Busen": [
       40,
