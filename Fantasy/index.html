@@ -453,8 +453,8 @@ function renderCumulativeChart() {
       datasets: [{
         label: 'Ukupno bodova svih ekipa',
         data: totalsPerRound,
-        backgroundColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#fbbf24cc' : '#4f8ef7cc'),
-        borderColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#fbbf24' : '#4f8ef7'),
+        backgroundColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#22c55ecc' : v === Math.min(...totalsPerRound) ? '#ef4444cc' : '#4f8ef7cc'),
+        borderColor: totalsPerRound.map(v => v === Math.max(...totalsPerRound) ? '#22c55e' : v === Math.min(...totalsPerRound) ? '#ef4444' : '#4f8ef7'),
         borderWidth: 1,
         borderRadius: 4
       }]
