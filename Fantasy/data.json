@@ -53,7 +53,16 @@
           "team2": "Nk Stokilaši"
         }
       ],
-      [],
+      [
+        {
+          "team1": "NK Busen",
+          "team2": "Nk Shogx"
+        },
+        {
+          "team1": "Nk River Plata",
+          "team2": "Nk Martinkovac"
+        }
+      ],
       []
     ]
   },
@@ -98,7 +107,7 @@
       56,
       68,
       48,
-      null,
+      65,
       null,
       null
     ],
@@ -136,7 +145,7 @@
       48,
       54,
       41,
-      null,
+      48,
       null,
       null
     ],
@@ -174,7 +183,7 @@
       63,
       76,
       48,
-      null,
+      43,
       null,
       null
     ],
@@ -212,7 +221,7 @@
       65,
       63,
       45,
-      null,
+      53,
       null,
       null
     ],
@@ -250,7 +259,7 @@
       64,
       61,
       32,
-      null,
+      49,
       null,
       null
     ],
@@ -288,7 +297,7 @@
       61,
       61,
       39,
-      null,
+      51,
       null,
       null
     ]
