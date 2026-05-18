@@ -87,7 +87,7 @@
           null,
           null,
           null,
-          1675
+          null
         ],
         "Inter Ducks": [
           null,
@@ -125,7 +125,7 @@
           null,
           null,
           null,
-          1565
+          null
         ],
         "Nk River Plata": [
           null,
@@ -163,7 +163,7 @@
           null,
           null,
           null,
-          1605
+          null
         ],
         "Nk Martinkovac": [
           null,
@@ -201,7 +201,7 @@
           null,
           null,
           null,
-          1589
+          null
         ],
         "Nk Shogx": [
           null,
@@ -239,7 +239,7 @@
           null,
           null,
           null,
-          1341
+          null
         ],
         "NK Poderana Štucna": [
           null,
@@ -277,8 +277,16 @@
           null,
           null,
           null,
-          1614
+          null
         ]
+      },
+      "final_totals": {
+        "NK Busen": 1675,
+        "Inter Ducks": 1565,
+        "Nk River Plata": 1605,
+        "Nk Martinkovac": 1589,
+        "Nk Shogx": 1341,
+        "NK Poderana Štucna": 1614
       }
     },
     "24/25": {
@@ -372,7 +380,7 @@
           null,
           null,
           null,
-          1909
+          null
         ],
         "Inter Ducks": [
           null,
@@ -410,7 +418,7 @@
           null,
           null,
           null,
-          1836
+          null
         ],
         "Nk River Plata": [
           null,
@@ -448,7 +456,7 @@
           null,
           null,
           null,
-          1804
+          null
         ],
         "Nk Martinkovac": [
           null,
@@ -486,7 +494,7 @@
           null,
           null,
           null,
-          1798
+          null
         ],
         "Nk Stokilaši": [
           null,
@@ -524,7 +532,7 @@
           null,
           null,
           null,
-          1767
+          null
         ],
         "Nk Shogx": [
           null,
@@ -562,7 +570,7 @@
           null,
           null,
           null,
-          1620
+          null
         ],
         "NK Poderana Štucna": [
           null,
@@ -600,8 +608,17 @@
           null,
           null,
           null,
-          1549
+          null
         ]
+      },
+      "final_totals": {
+        "NK Busen": 1909,
+        "Inter Ducks": 1836,
+        "Nk River Plata": 1804,
+        "Nk Martinkovac": 1798,
+        "Nk Stokilaši": 1767,
+        "Nk Shogx": 1620,
+        "NK Poderana Štucna": 1549
       }
     },
     "25/26": {

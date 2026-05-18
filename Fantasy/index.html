@@ -294,6 +294,7 @@ let TEAM_INITIALS = {};
 let SCORES = {};
 let CUP = { start_round: 34, rounds: [] };
 let AWARDS = { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
+let SEASON_FINAL_TOTALS = null; // set when season has only total scores, no round data
 
 // ===================== SEASON MANAGEMENT =====================
 function populateSeasonSelector() {
@@ -324,6 +325,7 @@ function loadSeasonData(key) {
   });
   CUP = s.cup || { start_round: 34, rounds: [] };
   AWARDS = s.awards || { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
+  SEASON_FINAL_TOTALS = (s.final_totals && Object.keys(s.final_totals).length > 0) ? s.final_totals : null;
 
   renderAll();
   updateSeasonUI();
@@ -410,8 +412,16 @@ function getSeasonPlayedRounds(s) {
   return count;
 }
 
+function seasonHasData(s) {
+  if (s.final_totals && Object.keys(s.final_totals).length > 0) return true;
+  return getSeasonPlayedRounds(s) > 0;
+}
+
 function getSeasonFinalRanking(s) {
   const teams = (s.teams || []).map(t => t.name);
+  if (s.final_totals && Object.keys(s.final_totals).length > 0) {
+    return teams.map(t => ({ team: t, total: s.final_totals[t] || 0 })).sort((a, b) => b.total - a.total);
+  }
   const played = getSeasonPlayedRounds(s);
   return teams.map(t => ({
     team: t,
@@ -520,6 +530,18 @@ function showPage(name, el) {
 // ===================== LJESTVICA =====================
 function renderSummaryCards(played) {
   if (!played) {
+    if (SEASON_FINAL_TOTALS) {
+      const ranking = TEAMS.map(t => ({ team: t, total: SEASON_FINAL_TOTALS[t] || 0 })).sort((a, b) => b.total - a.total);
+      const leader = ranking[0];
+      const gap = leader.total - (ranking[1] ? ranking[1].total : 0);
+      document.getElementById('summary-cards').innerHTML = `
+        <div class="card"><div class="card-label">Status</div><div class="card-value" style="font-size:14px;color:var(--accent2)">Završna ljestvica</div><div class="card-sub">Bodovi po kolima nisu dostupni</div></div>
+        <div class="card"><div class="card-label">Prvak sezone</div><div class="card-value" style="font-size:18px;color:var(--gold)">${leader.team}</div><div class="card-sub">${leader.total} bodova</div></div>
+        <div class="card"><div class="card-label">Prednost prvog</div><div class="card-value" style="color:var(--green)">+${gap}</div><div class="card-sub">pred ${ranking[1] ? ranking[1].team : '—'}</div></div>
+      `;
+      document.getElementById('current-round-info').textContent = `Završna ljestvica — Fantasy liga ${SELECTED_SEASON}`;
+      return;
+    }
     document.getElementById('summary-cards').innerHTML = `<div class="card"><div class="card-label">Status</div><div class="card-value" style="font-size:16px;color:var(--text-muted)">Nema odigranih kola</div></div>`;
     return;
   }
@@ -539,7 +561,26 @@ function renderSummaryCards(played) {
 }
 
 function renderLeaderboard(played) {
-  if (!played) { document.getElementById('leaderboard-rows').innerHTML = ''; return; }
+  if (!played) {
+    if (SEASON_FINAL_TOTALS) {
+      const ranking = TEAMS.map(t => ({ team: t, total: SEASON_FINAL_TOTALS[t] || 0 })).sort((a, b) => b.total - a.total);
+      let html = '';
+      ranking.forEach((item, i) => {
+        const currRank = i + 1;
+        const color = teamColor(item.team);
+        html += `<div class="lb-row">
+          <div class="lb-rank ${currRank <= 3 ? 'r' + currRank : ''}">${currRank}</div>
+          <div class="team-name"><div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>${item.team}${currRank === 1 ? ' 👑' : ''}</div>
+          <div class="lb-pts">${item.total}</div>
+          <div class="lb-num">—</div><div class="lb-num">—</div><div class="lb-num">—</div>
+          <div class="change same">—</div>
+        </div>`;
+      });
+      document.getElementById('leaderboard-rows').innerHTML = html;
+      return;
+    }
+    document.getElementById('leaderboard-rows').innerHTML = ''; return;
+  }
   const totals = getAllTotals(played);
   const prevTotals = played > 1 ? getAllTotals(played - 1) : totals;
 
@@ -970,7 +1011,7 @@ function renderAllTimePage() {
   const allTeamNames = Object.keys(teamMeta);
 
   // Seasons with at least some data
-  const seasonsWithData = seasonKeys.filter(k => getSeasonPlayedRounds(ALL_SEASONS_DATA[k]) > 0);
+  const seasonsWithData = seasonKeys.filter(k => seasonHasData(ALL_SEASONS_DATA[k]));
 
   // Compute all-time stats per team
   const teamStats = allTeamNames.map(team => {
@@ -982,14 +1023,22 @@ function renderAllTimePage() {
     seasonKeys.forEach(key => {
       const s = ALL_SEASONS_DATA[key];
       if (!s.teams || !s.teams.find(t => t.name === team)) { seasonBreakdown[key] = null; return; }
-      const played = getSeasonPlayedRounds(s);
-      if (played === 0 || !s.scores || !s.scores[team]) { seasonBreakdown[key] = null; return; }
-      const pts = s.scores[team].slice(0, played).filter(v => v !== null).reduce((a, b) => a + b, 0);
+
+      // Use final_totals if available, otherwise calculate from rounds
+      let pts = null;
+      if (s.final_totals && s.final_totals[team] !== undefined) {
+        pts = s.final_totals[team];
+      } else {
+        const played = getSeasonPlayedRounds(s);
+        if (played === 0 || !s.scores || !s.scores[team]) { seasonBreakdown[key] = null; return; }
+        pts = s.scores[team].slice(0, played).filter(v => v !== null).reduce((a, b) => a + b, 0);
+        totalOmega += getSeasonOmegaWins(s, team);
+      }
+
       totalPts += pts;
       seasonsPlayed++;
       seasonBreakdown[key] = pts;
       if (!bestSeason || pts > bestSeason.pts) bestSeason = { key, pts };
-      totalOmega += getSeasonOmegaWins(s, team);
       const ranking = getSeasonFinalRanking(s);
       const rank = ranking.findIndex(t => t.team === team) + 1;
       if (rank >= 1 && rank <= 3) placements[rank]++;
