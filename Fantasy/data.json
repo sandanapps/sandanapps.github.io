@@ -63,7 +63,12 @@
           "team2": "Nk Martinkovac"
         }
       ],
-      []
+      [
+        {
+          "team1": "NK Busen",
+          "team2": "Nk River Plata"
+        }
+      ]
     ]
   },
   "awards": {
@@ -108,7 +113,7 @@
       68,
       48,
       65,
-      null,
+      59,
       null
     ],
     "Inter Ducks": [
@@ -146,7 +151,7 @@
       54,
       41,
       48,
-      null,
+      53,
       null
     ],
     "Nk River Plata": [
@@ -184,7 +189,7 @@
       76,
       48,
       43,
-      null,
+      55,
       null
     ],
     "Nk Martinkovac": [
@@ -222,7 +227,7 @@
       63,
       45,
       53,
-      null,
+      37,
       null
     ],
     "Nk Stokilaši": [
@@ -260,7 +265,7 @@
       61,
       32,
       49,
-      null,
+      38,
       null
     ],
     "Nk Shogx": [
@@ -298,7 +303,7 @@
       61,
       39,
       51,
-      null,
+      45,
       null
     ]
   }
