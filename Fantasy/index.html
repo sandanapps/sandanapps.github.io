@@ -133,6 +133,22 @@
   .season-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
   .season-card.current { border-color: var(--accent); }
 
+  /* ===== JOKERI / CHIPS ===== */
+  .chip { display:inline-flex;align-items:center;gap:3px;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;white-space:nowrap;line-height:1.5; }
+  .chip-wc { background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.4); }
+  .chip-fh { background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.4); }
+  .chip-bb { background:rgba(79,142,247,0.15);color:#4f8ef7;border:1px solid rgba(79,142,247,0.4); }
+  .chip-tc { background:rgba(168,85,247,0.15);color:#a855f7;border:1px solid rgba(168,85,247,0.4); }
+  .chip-na { background:var(--surface2);color:var(--text-muted);border:1px solid var(--border); }
+  .chips-row { display:flex;flex-wrap:wrap;gap:4px;margin-top:5px; }
+  .joker-table { width:100%;border-collapse:collapse; }
+  .joker-table th,.joker-table td { padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;text-align:center; }
+  .joker-table th { font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;background:var(--surface2); }
+  .joker-table td:first-child { text-align:left; }
+  .joker-table tr:last-child td { border-bottom:none; }
+  .joker-table tr:hover td { background:var(--surface2); }
+  .chip-avail { background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);border-radius:5px;padding:2px 8px;font-size:11px; }
+
   @media(max-width: 768px) {
     .lb-header, .lb-row { grid-template-columns: 36px 1fr 70px 60px; }
     .lb-header > *:nth-child(n+5), .lb-row > *:nth-child(n+5) { display: none; }
@@ -158,6 +174,7 @@
   <div class="nav-tab" onclick="showPage('grafovi', this)">Grafovi</div>
   <div class="nav-tab" onclick="showPage('statistike', this)">Statistike</div>
   <div class="nav-tab" onclick="showPage('nagrade', this)">Nagrade</div>
+  <div class="nav-tab" onclick="showPage('jokeri', this)">Jokeri</div>
   <div class="nav-tab alltime-tab" onclick="showPage('alltime', this)">All-time</div>
 </nav>
 
@@ -272,6 +289,13 @@
     <div id="kup-content"></div>
   </div>
 
+  <!-- JOKERI -->
+  <div class="page" id="page-jokeri">
+    <div class="section-title">Jokeri</div>
+    <div class="section-sub" id="jokeri-sub">Pregled iskorištenosti jokera po ekipama</div>
+    <div id="jokeri-content"></div>
+  </div>
+
   <!-- ALL-TIME -->
   <div class="page" id="page-alltime">
     <div class="section-title">All-time ljestvica</div>
@@ -294,7 +318,16 @@ let TEAM_INITIALS = {};
 let SCORES = {};
 let CUP = { start_round: 34, rounds: [] };
 let AWARDS = { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
-let SEASON_FINAL_TOTALS = null; // set when season has only total scores, no round data
+let SEASON_FINAL_TOTALS = null;
+let JOKERS = {};
+
+const CHIP_DEFS = {
+  WC1: { label:'WC¹', icon:'⚡', cls:'chip-wc', name:'Wildcard 1', desc:'Neograničeni transferi, tim se zadržava (1. polugodište)' },
+  WC2: { label:'WC²', icon:'⚡', cls:'chip-wc', name:'Wildcard 2', desc:'Neograničeni transferi, tim se zadržava (2. polugodište)' },
+  FH:  { label:'FH',  icon:'★',  cls:'chip-fh', name:'Free Hit',   desc:'Neograničeni transferi za 1 kolo, tim se vraća' },
+  BB:  { label:'BB',  icon:'▤',  cls:'chip-bb', name:'Bench Boost',desc:'Klupa se broji u ukupni rezultat kola' },
+  TC:  { label:'TC',  icon:'3×', cls:'chip-tc', name:'Triple Captain', desc:'Kapetan vrijedi 3× u tom kolu' },
+};
 
 // ===================== SEASON MANAGEMENT =====================
 function populateSeasonSelector() {
@@ -326,6 +359,9 @@ function loadSeasonData(key) {
   CUP = s.cup || { start_round: 34, rounds: [] };
   AWARDS = s.awards || { prize_1st: '', prize_2nd: '', prize_3rd: '', prize_cup: '' };
   SEASON_FINAL_TOTALS = (s.final_totals && Object.keys(s.final_totals).length > 0) ? s.final_totals : null;
+  const rawJokers = s.jokers || {};
+  JOKERS = {};
+  TEAMS.forEach(t => { JOKERS[t] = { WC1:null, WC2:null, FH:null, BB:null, TC:null, ...(rawJokers[t] || {}) }; });
 
   renderAll();
   updateSeasonUI();
@@ -399,6 +435,119 @@ function getOmegaWins(team) {
 }
 
 function teamColor(team) { return TEAM_COLORS[TEAMS.indexOf(team)] || '#94a3b8'; }
+
+// ===================== JOKER HELPERS =====================
+function getChipsInRound(round) {
+  const result = {};
+  TEAMS.forEach(t => {
+    const j = JOKERS[t] || {};
+    const used = Object.keys(CHIP_DEFS).filter(k => j[k] === round);
+    if (used.length) result[t] = used;
+  });
+  return result;
+}
+
+function chipBadge(key, gw) {
+  const d = CHIP_DEFS[key];
+  return `<span class="chip ${d.cls}" title="${d.name} — Kolo ${gw}">${d.icon} ${d.label} K${gw}</span>`;
+}
+
+function teamChipsBadges(team) {
+  const j = JOKERS[team] || {};
+  return Object.keys(CHIP_DEFS).filter(k => j[k] !== null).map(k => chipBadge(k, j[k])).join(' ');
+}
+
+// ===================== JOKERI PAGE =====================
+function renderJokersPage() {
+  const el = document.getElementById('jokeri-content');
+  if (!el) return;
+
+  document.getElementById('jokeri-sub').textContent =
+    `Pregled jokera — sezona ${SELECTED_SEASON}`;
+
+  const usedCount = TEAMS.reduce((sum, t) => {
+    const j = JOKERS[t] || {};
+    return sum + Object.values(j).filter(v => v !== null).length;
+  }, 0);
+  const totalChips = TEAMS.length * Object.keys(CHIP_DEFS).length;
+
+  let html = `<div class="cards" style="margin-bottom:24px">
+    <div class="card"><div class="card-label">Iskorišteni jokeri</div><div class="card-value">${usedCount}</div><div class="card-sub">od ${totalChips} dostupnih</div></div>
+    <div class="card"><div class="card-label">Dostupni jokeri</div><div class="card-value" style="color:var(--green)">${totalChips - usedCount}</div><div class="card-sub">još nije iskorišteno</div></div>
+  </div>`;
+
+  // Overview table
+  html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px">
+    <div style="padding:14px 20px;border-bottom:1px solid var(--border);font-size:15px;font-weight:700">Pregled jokera po ekipama</div>
+    <div style="overflow-x:auto"><table class="joker-table"><thead><tr>
+      <th style="text-align:left">Ekipa</th>
+      ${Object.keys(CHIP_DEFS).map(k => `<th><span class="chip ${CHIP_DEFS[k].cls}" title="${CHIP_DEFS[k].desc}">${CHIP_DEFS[k].icon} ${CHIP_DEFS[k].label}</span></th>`).join('')}
+    </tr></thead><tbody>`;
+
+  TEAMS.forEach(t => {
+    const color = teamColor(t);
+    const j = JOKERS[t] || {};
+    html += `<tr><td>
+      <div class="team-name"><div class="team-badge" style="background:${color}22;color:${color};width:26px;height:26px;font-size:10px">${TEAM_INITIALS[t]}</div>${t}</div>
+    </td>`;
+    Object.keys(CHIP_DEFS).forEach(k => {
+      const d = CHIP_DEFS[k];
+      if (j[k] !== null) {
+        html += `<td><span class="chip ${d.cls}">${d.icon} Kolo ${j[k]}</span></td>`;
+      } else {
+        html += `<td><span class="chip-avail">dostupan</span></td>`;
+      }
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table></div></div>`;
+
+  // Legend
+  html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Opis jokera</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">`;
+  Object.keys(CHIP_DEFS).forEach(k => {
+    const d = CHIP_DEFS[k];
+    html += `<div style="display:flex;gap:10px;align-items:flex-start">
+      <span class="chip ${d.cls}" style="flex-shrink:0">${d.icon} ${d.label}</span>
+      <div><div style="font-weight:600;font-size:13px">${d.name}</div><div style="font-size:12px;color:var(--text-muted);margin-top:2px">${d.desc}</div></div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Chips used by round (timeline)
+  const played = getPlayedRounds();
+  if (played > 0) {
+    const roundsWithChips = [];
+    for (let r = 1; r <= played; r++) {
+      const chips = getChipsInRound(r);
+      if (Object.keys(chips).length > 0) roundsWithChips.push({ round: r, chips });
+    }
+    if (roundsWithChips.length > 0) {
+      html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
+        <div style="font-size:14px;font-weight:700;margin-bottom:14px">Kronološki pregled</div>
+        <div style="display:flex;flex-direction:column;gap:10px">`;
+      roundsWithChips.forEach(({ round, chips }) => {
+        html += `<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="font-size:13px;font-weight:700;color:var(--text-muted);min-width:60px">Kolo ${round}</div>`;
+        Object.entries(chips).forEach(([team, keys]) => {
+          const color = teamColor(team);
+          keys.forEach(k => {
+            const d = CHIP_DEFS[k];
+            html += `<div style="display:flex;align-items:center;gap:6px">
+              <div class="team-badge" style="background:${color}22;color:${color};width:22px;height:22px;font-size:9px">${TEAM_INITIALS[team]}</div>
+              <span class="chip ${d.cls}">${d.icon} ${d.label}</span>
+            </div>`;
+          });
+        });
+        html += `</div>`;
+      });
+      html += `</div></div>`;
+    }
+  }
+
+  el.innerHTML = html;
+}
 
 // ===================== ALL-TIME HELPERS =====================
 function getSeasonPlayedRounds(s) {
@@ -525,6 +674,7 @@ function showPage(name, el) {
   document.getElementById('page-' + name).classList.add('active');
   el.classList.add('active');
   if (name === 'alltime') renderAllTimePage();
+  if (name === 'jokeri') renderJokersPage();
 }
 
 // ===================== LJESTVICA =====================
@@ -600,6 +750,7 @@ function renderLeaderboard(played) {
     const maxScore = Math.max(...scores);
     const omega = getOmegaWins(item.team);
     const crown = currRank === 1 ? ' 👑' : '';
+    const chips = teamChipsBadges(item.team);
 
     html += `
       <div class="lb-row">
@@ -607,6 +758,7 @@ function renderLeaderboard(played) {
         <div class="team-name">
           <div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>
           ${item.team}${crown}
+          ${chips ? `<div style="margin-left:auto;display:flex;gap:4px;flex-wrap:wrap">${chips}</div>` : ''}
         </div>
         <div class="lb-pts">${item.total}</div>
         <div class="lb-num">${minScore}</div>
@@ -674,6 +826,7 @@ function renderRoundView(round) {
     <div class="card"><div class="card-label">Lider nakon kola ${round}</div><div class="card-value" style="font-size:16px;color:var(--gold)">${totals[0].team}</div><div class="card-sub">${totals[0].total} ukupno</div></div>
   `;
 
+  const chipsInRound = getChipsInRound(round);
   let html = '';
   roundScores.forEach((item, rankInRound) => {
     const totalRank = totals.findIndex(t => t.team === item.team) + 1;
@@ -682,12 +835,16 @@ function renderRoundView(round) {
     const cumTotal = getTeamTotal(item.team, round);
     const isBest = item.score === bestScore;
     const color = teamColor(item.team);
+    const teamChips = chipsInRound[item.team] || [];
+    const chipBadges = teamChips.map(k => {
+      const d = CHIP_DEFS[k]; return `<span class="chip ${d.cls}" title="${d.name}">${d.icon} ${d.label}</span>`;
+    }).join(' ');
     let chg = rankChange > 0 ? `<span style="color:var(--green)">↑${rankChange}</span>` : rankChange < 0 ? `<span style="color:var(--red)">↓${Math.abs(rankChange)}</span>` : `<span style="color:var(--text-muted)">—</span>`;
     html += `
       <div class="rt-row">
         <div style="font-weight:700;color:${rankInRound === 0 ? 'var(--gold)' : 'var(--text-muted)'}">${rankInRound + 1}</div>
         <div class="team-name"><div class="team-badge" style="background:${color}22;color:${color}">${TEAM_INITIALS[item.team]}</div>${item.team}</div>
-        <div style="text-align:right"><span class="score-pill ${isBest ? 'best' : ''}">${item.score}</span></div>
+        <div style="text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:6px">${chipBadges}<span class="score-pill ${isBest ? 'best' : ''}">${item.score}</span></div>
         <div style="text-align:right;font-weight:600">${cumTotal}</div>
         <div style="text-align:right">${rankInRound + 1}</div>
         <div style="text-align:right">${totalRank} ${chg}</div>
