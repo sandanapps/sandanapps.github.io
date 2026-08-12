@@ -2,7 +2,7 @@ name: Update release data
 
 on:
   schedule:
-    - cron: "17 4 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch: {}
 
 permissions:
