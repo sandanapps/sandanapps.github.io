@@ -1,1 +1,37 @@
-Hello
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokeFetcher — Pregled release-a Pokémon GO</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <h1>PokeFetcher</h1>
+  <p>Pregled release-a Pokémona, Shiny Pokémona, Eventova i Shadow Pokémona po datumima</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<div class="controls">
+  <input type="search" id="search" placeholder="Pretraži po imenu ili opisu..." aria-label="Pretraga">
+  <select id="year-filter" aria-label="Filter po godini"></select>
+  <select id="sort-order" aria-label="Redoslijed sortiranja">
+    <option value="desc">Najnoviji prvo</option>
+    <option value="asc">Najstariji prvo</option>
+  </select>
+</div>
+
+<main>
+  <section class="upcoming" id="upcoming"></section>
+  <div id="timeline"></div>
+</main>
+
+<footer>
+  <p>Podaci preuzeti s <a href="https://pokemongo.fandom.com/" target="_blank" rel="noopener noreferrer">Pokémon GO Fandom Wiki</a>. Automatski osvježavano putem GitHub Actions.</p>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
