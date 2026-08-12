@@ -6,6 +6,7 @@ issues). The generated JSON is the only thing the static site reads at runtime.
 """
 import json
 import re
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -26,6 +27,7 @@ MONTHS = {
 }
 
 OUT_PATH = Path(__file__).resolve().parent.parent / "data" / "releases.json"
+SPRITES_DIR = Path(__file__).resolve().parent.parent / "data" / "sprites"
 
 
 def api_get(params):
@@ -146,6 +148,7 @@ def parse_entries_from_block(block, template_names):
             types = [p for p in positional[2:] if p and not p.startswith("ci=")]
             entry["types"] = types
             entry["costume"] = None
+        entry["ci"] = named.get("ci")
         form = None
         if named.get("mega") == "t":
             form = "mega"
@@ -189,6 +192,118 @@ def parse_tabber_entries(block, template_names):
         else:
             regular.extend(entries)
     return regular, shiny
+
+
+def sprite_filename(entry):
+    """Resolves the Fandom File: title an entry's sprite would use, mirroring
+    the {{P}}/{{PS}}/{{PC}} template logic (verified against real File: pages
+    via the MediaWiki API, e.g. ci=Charizard x + mega=t -> "Charizard x_mega.png",
+    PC with ci=Ponyta galarian + costume=meloetta -> "Ponyta galarian_meloetta.png").
+    """
+    name = entry.get("name", "")
+    if not name:
+        return None
+    ci = entry.get("ci")
+    form = entry.get("form")
+    costume = entry.get("costume")
+    is_shiny = entry.get("isShiny")
+    suffix = f"_{form}" if form else ""
+    base = ci or name
+
+    if costume:
+        parts = [base, costume]
+        if is_shiny:
+            parts.append("shiny")
+        return " ".join(parts) + ".png"
+
+    if is_shiny:
+        return f"{base}{suffix} shiny.png"
+    return f"{base}{suffix}.png"
+
+
+def resolve_sprite_urls(filenames):
+    """Given distinct sprite filenames, returns {filename: image_url or None}
+    by batch-querying the MediaWiki API for File: page existence."""
+    result = {f: None for f in filenames}
+    batch_size = 50
+    for i in range(0, len(filenames), batch_size):
+        batch = filenames[i:i + batch_size]
+        titles = "|".join("File:" + f for f in batch)
+        data = api_get({
+            "action": "query",
+            "titles": titles,
+            "prop": "imageinfo",
+            "iiprop": "url",
+            "format": "json",
+            "formatversion": "2",
+        })
+        found = {}
+        for page in data.get("query", {}).get("pages", []):
+            if page.get("missing"):
+                continue
+            imageinfo = page.get("imageinfo")
+            if not imageinfo:
+                continue
+            key = page["title"][len("File:"):]
+            found[key.lower()] = imageinfo[0]["url"]
+        for f in batch:
+            url = found.get(f.lower())
+            if url:
+                result[f] = url
+    return result
+
+
+def download_sprites(url_map):
+    """Downloads any not-yet-local sprite images into SPRITES_DIR.
+
+    Returns {filename: relative_path or None} for use as each entry's
+    "sprite" field.
+    """
+    SPRITES_DIR.mkdir(parents=True, exist_ok=True)
+    local_paths = {}
+    for filename, url in url_map.items():
+        if not url:
+            local_paths[filename] = None
+            continue
+        local_name = filename.replace(" ", "_")
+        local_path = SPRITES_DIR / local_name
+        local_paths[filename] = f"data/sprites/{local_name}"
+        if local_path.exists():
+            continue
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                local_path.write_bytes(resp.read())
+        except urllib.error.URLError as exc:
+            print(f"  warning: failed to download {filename}: {exc}")
+            local_paths[filename] = None
+    return local_paths
+
+
+def attach_sprites(all_events):
+    """Computes each entry's sprite filename, resolves/downloads the image
+    from Fandom, and sets entry["sprite"] to a repo-relative path (or None)."""
+    filenames = set()
+    for event in all_events:
+        for entry in event["entries"]:
+            fname = sprite_filename(entry)
+            entry["_spriteFilename"] = fname
+            if fname:
+                filenames.add(fname)
+
+    print(f"Resolving {len(filenames)} distinct sprite filenames on Fandom...")
+    url_map = resolve_sprite_urls(sorted(filenames))
+    missing = sum(1 for u in url_map.values() if not u)
+    print(f"  {len(url_map) - missing} found, {missing} not found")
+
+    print("Downloading new sprites...")
+    local_paths = download_sprites(url_map)
+
+    for event in all_events:
+        for entry in event["entries"]:
+            fname = entry.pop("_spriteFilename", None)
+            entry.pop("ci", None)
+            entry["sprite"] = local_paths.get(fname) if fname else None
 
 
 def build_anchor(heading):
@@ -289,6 +404,9 @@ def main():
 
     all_events = pokemon_events + shiny_events + event_events + shadow_events
     all_events.sort(key=lambda e: (e["date"], e["category"]))
+
+    print("Resolving Pokémon sprites from Fandom...")
+    attach_sprites(all_events)
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
