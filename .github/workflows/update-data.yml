@@ -31,7 +31,14 @@ jobs:
           git add PokeFetcher/data/releases.json PokeFetcher/data/sprites
           if git diff --cached --quiet; then
             echo "No changes to release data."
-          else
-            git commit -m "chore: update release data"
-            git push
+            exit 0
           fi
+          git commit -m "chore: update release data"
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main && git push && exit 0
+            echo "Push rejected, retrying ($i)..."
+            sleep 5
+          done
+          echo "Failed to push after retries."
+          exit 1
