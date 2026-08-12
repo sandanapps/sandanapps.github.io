@@ -2,11 +2,19 @@
   "use strict";
 
   const CATEGORIES = [
+    { key: "all", label: "Pregled" },
     { key: "pokemon", label: "Pokemoni" },
     { key: "shiny", label: "Shiny Pokemoni" },
     { key: "events", label: "Events" },
     { key: "shadow", label: "Shadow Pokemoni" },
   ];
+
+  const CATEGORY_LABELS = CATEGORIES.reduce((acc, c) => {
+    acc[c.key] = c.label;
+    return acc;
+  }, {});
+
+  const RECENT_DAYS = 30;
 
   const MONTH_NAMES = [
     "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj",
@@ -15,13 +23,19 @@
 
   const state = {
     data: [],
-    category: "pokemon",
+    category: "all",
     search: "",
     year: "all",
     sort: "desc",
   };
 
   const todayStr = new Date().toISOString().slice(0, 10);
+
+  function daysAgoStr(days) {
+    const d = new Date();
+    d.setDate(d.getDate() - days);
+    return d.toISOString().slice(0, 10);
+  }
 
   function el(tag, attrs, children) {
     const node = document.createElement(tag);
@@ -68,18 +82,28 @@
     if (entry.shadow) classes.push("is-shadow");
     const badge = formBadge(entry);
     const label = entry.costume ? `${entry.name} (${entry.costume})` : entry.name;
+    const sprite = entry.sprite
+      ? el("img", { class: "chip-sprite", src: `./${entry.sprite}`, alt: "", loading: "lazy" })
+      : null;
     return el("span", { class: classes.join(" "), style: `background:${bg}` }, [
+      sprite,
       document.createTextNode((entry.isShiny ? "✨ " : "") + label),
       badge ? el("span", { class: "badge", text: ` · ${badge}` }) : null,
     ]);
   }
 
-  function buildEventRow(event) {
+  function buildEventRow(event, opts) {
+    const showCategory = opts && opts.showCategory;
     const status = dateStatus(event.date);
     const row = el("div", { class: `event-row is-${status}` });
     row.appendChild(el("div", { class: "event-date", text: formatDate(event.date) }));
 
     const body = el("div", { class: "event-body" });
+    if (showCategory) {
+      body.appendChild(
+        el("div", { class: `category-tag category-${event.category}`, text: CATEGORY_LABELS[event.category] })
+      );
+    }
     if (event.note) {
       const noteEl = el("div", { class: "event-note" });
       noteEl.appendChild(document.createTextNode(event.note + " "));
@@ -97,9 +121,12 @@
 
   function getFilteredEvents() {
     const search = state.search.trim().toLowerCase();
+    const isAll = state.category === "all";
+    const recentCutoff = daysAgoStr(RECENT_DAYS);
     return state.data
-      .filter((e) => e.category === state.category)
-      .filter((e) => state.year === "all" || e.date.startsWith(state.year))
+      .filter((e) => isAll || e.category === state.category)
+      .filter((e) => !isAll || e.date >= recentCutoff)
+      .filter((e) => isAll || state.year === "all" || e.date.startsWith(state.year))
       .filter((e) => {
         if (!search) return true;
         if (e.note && e.note.toLowerCase().includes(search)) return true;
@@ -121,10 +148,11 @@
 
   function renderUpcoming() {
     const container = document.getElementById("upcoming");
+    const isAll = state.category === "all";
     const upcoming = state.data
-      .filter((e) => e.category === state.category && e.date >= todayStr)
+      .filter((e) => (isAll || e.category === state.category) && e.date >= todayStr)
       .sort((a, b) => a.date.localeCompare(b.date))
-      .slice(0, 5);
+      .slice(0, isAll ? 15 : 5);
 
     container.innerHTML = "";
     if (!upcoming.length) {
@@ -133,12 +161,20 @@
     }
     container.style.display = "";
     container.appendChild(el("h2", { text: "Nadolazeći release-i" }));
-    const list = el("div", { class: "upcoming-list" }, upcoming.map(buildEventRow));
+    const list = el(
+      "div",
+      { class: "upcoming-list" },
+      upcoming.map((e) => buildEventRow(e, { showCategory: isAll }))
+    );
     container.appendChild(list);
   }
 
   function renderYearOptions() {
     const select = document.getElementById("year-filter");
+    const isAll = state.category === "all";
+    const yearFilterWrap = document.getElementById("year-filter-wrap");
+    if (yearFilterWrap) yearFilterWrap.style.display = isAll ? "none" : "";
+    if (isAll) return;
     const years = Array.from(
       new Set(state.data.filter((e) => e.category === state.category).map((e) => e.date.slice(0, 4)))
     ).sort();
@@ -153,6 +189,16 @@
   function renderTimeline() {
     const main = document.getElementById("timeline");
     main.innerHTML = "";
+    const isAll = state.category === "all";
+
+    if (isAll) {
+      main.appendChild(
+        el("p", {
+          class: "timeline-hint",
+          text: `Pregled zadnjih ${RECENT_DAYS} dana i svih budućih release-a iz svih kategorija. Odaberi kategoriju gore za punu povijest.`,
+        })
+      );
+    }
 
     const events = getFilteredEvents().sort((a, b) =>
       state.sort === "asc" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date)
@@ -185,7 +231,7 @@
         const monthEvents = months.get(month).sort((a, b) =>
           state.sort === "asc" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date)
         );
-        monthEvents.forEach((e) => monthGroup.appendChild(buildEventRow(e)));
+        monthEvents.forEach((e) => monthGroup.appendChild(buildEventRow(e, { showCategory: isAll })));
         yearGroup.appendChild(monthGroup);
       }
       main.appendChild(yearGroup);
