@@ -1019,7 +1019,7 @@
       "scores": {
         "NK Busen": [
           81,
-          null,
+          66,
           null,
           null,
           null,
@@ -1057,7 +1057,7 @@
         ],
         "Inter Ducks": [
           65,
-          null,
+          74,
           null,
           null,
           null,
@@ -1095,7 +1095,7 @@
         ],
         "Nk River Plata": [
           41,
-          null,
+          97,
           null,
           null,
           null,
@@ -1133,7 +1133,7 @@
         ],
         "Nk Martinkovac": [
           32,
-          null,
+          86,
           null,
           null,
           null,
@@ -1171,7 +1171,7 @@
         ],
         "Nk Shogx": [
           64,
-          null,
+          16,
           null,
           null,
           null,
@@ -1209,7 +1209,7 @@
         ],
         "Nk Stokilaši": [
           59,
-          null,
+          28,
           null,
           null,
           null,
@@ -1250,19 +1250,19 @@
         "NK Busen": {
           "WC1": null,
           "WC2": null,
-          "FH": null,
+          "FH": 2,
           "BB": 1,
           "TC": null
         },
         "Inter Ducks": {
           "WC1": null,
           "WC2": null,
-          "FH": null,
+          "FH": 2,
           "BB": null,
           "TC": null
         },
         "Nk River Plata": {
-          "WC1": null,
+          "WC1": 2,
           "WC2": null,
           "FH": null,
           "BB": null,
@@ -1271,7 +1271,7 @@
         "Nk Martinkovac": {
           "WC1": null,
           "WC2": null,
-          "FH": null,
+          "FH": 2,
           "BB": null,
           "TC": null
         },
