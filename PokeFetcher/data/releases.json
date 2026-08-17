@@ -35703,9 +35703,20 @@
   {
     "category": "pokemon",
     "date": "2024-01-06",
-    "note": "Lycanroc Dusk was released at the start of Lustrous Odyssey. Shiny Rowlet was released later at the start of January 2024 Community Day.",
+    "note": "Rockruff Dusk and Lycanroc Dusk was released at the start of Lustrous Odyssey. Shiny Rowlet was released later at the start of January 2024 Community Day.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2024#January_6th",
     "entries": [
+      {
+        "name": "Rockruff",
+        "types": [
+          "Rock"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Rockruff.png"
+      },
       {
         "name": "Lycanroc",
         "types": [
@@ -35722,7 +35733,7 @@
   {
     "category": "shiny",
     "date": "2024-01-06",
-    "note": "Lycanroc Dusk was released at the start of Lustrous Odyssey. Shiny Rowlet was released later at the start of January 2024 Community Day.",
+    "note": "Rockruff Dusk and Lycanroc Dusk was released at the start of Lustrous Odyssey. Shiny Rowlet was released later at the start of January 2024 Community Day.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2024#January_6th",
     "entries": [
       {
