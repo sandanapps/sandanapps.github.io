@@ -1020,7 +1020,7 @@
         "NK Busen": [
           81,
           66,
-          null,
+          79,
           null,
           null,
           null,
@@ -1058,7 +1058,7 @@
         "Inter Ducks": [
           65,
           74,
-          null,
+          57,
           null,
           null,
           null,
@@ -1096,7 +1096,7 @@
         "Nk River Plata": [
           41,
           97,
-          null,
+          74,
           null,
           null,
           null,
@@ -1134,7 +1134,7 @@
         "Nk Martinkovac": [
           32,
           86,
-          null,
+          54,
           null,
           null,
           null,
@@ -1172,7 +1172,7 @@
         "Nk Shogx": [
           64,
           16,
-          null,
+          80,
           null,
           null,
           null,
@@ -1210,7 +1210,7 @@
         "Nk Stokilaši": [
           59,
           28,
-          null,
+          86,
           null,
           null,
           null,
@@ -1248,7 +1248,7 @@
       },
       "jokers": {
         "NK Busen": {
-          "WC1": null,
+          "WC1": 3,
           "WC2": null,
           "FH": 2,
           "BB": 1,
@@ -1280,10 +1280,10 @@
           "WC2": null,
           "FH": null,
           "BB": null,
-          "TC": null
+          "TC": 3
         },
         "Nk Stokilaši": {
-          "WC1": null,
+          "WC1": 3,
           "WC2": null,
           "FH": null,
           "BB": null,
