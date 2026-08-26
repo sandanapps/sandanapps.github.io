@@ -49783,5 +49783,129 @@
         "sprite": null
       }
     ]
+  },
+  {
+    "category": "events",
+    "date": "2026-08-25",
+    "note": "Cosmog-themed spacesuit and World Championships 2026 Pikachu were released at the start of PokémonXP & 2026 Pokémon World Championships.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#August_25th%2C_2026",
+    "entries": [
+      {
+        "name": "Pikachu",
+        "costume": "female spacesuit",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_female_spacesuit.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "worlds 2026",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_worlds_2026.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "female spacesuit",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_female_spacesuit_shiny.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "worlds 2026",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_worlds_2026_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "events",
+    "date": "2026-09-12",
+    "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu will be released at the start of the PokéXciting! cross-region GO Stamp Rally.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#September_12th%2C_2026",
+    "entries": [
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting turquoise",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_PokéXciting_turquoise.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting pink",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_PokéXciting_pink.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting blue",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_PokéXciting_blue.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting red",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_PokéXciting_red.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting turquoise",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_PokéXciting_turquoise_shiny.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting pink",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_PokéXciting_pink_shiny.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting blue",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_PokéXciting_blue_shiny.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "PokéXciting red",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_PokéXciting_red_shiny.png"
+      }
+    ]
   }
 ]
