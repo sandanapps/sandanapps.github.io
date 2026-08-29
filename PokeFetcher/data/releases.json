@@ -49829,6 +49829,94 @@
     ]
   },
   {
+    "category": "pokemon",
+    "date": "2026-08-28",
+    "note": "Mega Chesnaught, Mega Delphox, and Mega Greninja were released during PokémonXP & 2026 Pokémon World Championships.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#August_28th",
+    "entries": [
+      {
+        "name": "Chesnaught",
+        "types": [
+          "Grass",
+          "Fighting"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      },
+      {
+        "name": "Delphox",
+        "types": [
+          "Fire",
+          "Psychic"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      },
+      {
+        "name": "Greninja",
+        "types": [
+          "Water",
+          "Dark"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-08-28",
+    "note": "Mega Chesnaught, Mega Delphox, and Mega Greninja were released during PokémonXP & 2026 Pokémon World Championships.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#August_28th",
+    "entries": [
+      {
+        "name": "Chesnaught",
+        "types": [
+          "Grass",
+          "Fighting"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      },
+      {
+        "name": "Delphox",
+        "types": [
+          "Fire",
+          "Psychic"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      },
+      {
+        "name": "Greninja",
+        "types": [
+          "Water",
+          "Dark"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-09-12",
     "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu will be released at the start of the PokéXciting! cross-region GO Stamp Rally.",
