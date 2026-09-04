@@ -49917,6 +49917,56 @@
     ]
   },
   {
+    "category": "pokemon",
+    "date": "2026-09-08",
+    "note": "Maschiff and shiny Flamigo will be released at the start of Mega Squads.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_8th",
+    "entries": [
+      {
+        "name": "Maschiff",
+        "types": [
+          "Dark"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Maschiff.png"
+      },
+      {
+        "name": "Mabosstiff",
+        "types": [
+          "Dark"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Mabosstiff.png"
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-09-08",
+    "note": "Maschiff and shiny Flamigo will be released at the start of Mega Squads.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_8th",
+    "entries": [
+      {
+        "name": "Flamigo",
+        "types": [
+          "Flying",
+          "Fighting"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Flamigo_shiny.png"
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-09-12",
     "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu will be released at the start of the PokéXciting! cross-region GO Stamp Rally.",
@@ -49993,6 +50043,46 @@
         "shadow": false,
         "isShiny": true,
         "sprite": "data/sprites/Pikachu_PokéXciting_red_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "pokemon",
+    "date": "2026-09-19",
+    "note": "Mega Staraptor will be released at the start of Staraptor Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_19th",
+    "entries": [
+      {
+        "name": "Staraptor",
+        "types": [
+          "Fighting",
+          "Flying"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-09-19",
+    "note": "Mega Staraptor will be released at the start of Staraptor Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_19th",
+    "entries": [
+      {
+        "name": "Staraptor",
+        "types": [
+          "Fighting",
+          "Flying"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
       }
     ]
   }
