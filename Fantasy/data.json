@@ -1023,7 +1023,7 @@
           79,
           57,
           78,
-          null,
+          75,
           null,
           null,
           null,
@@ -1061,7 +1061,7 @@
           57,
           57,
           69,
-          null,
+          67,
           null,
           null,
           null,
@@ -1099,7 +1099,7 @@
           74,
           62,
           79,
-          null,
+          64,
           null,
           null,
           null,
@@ -1137,7 +1137,7 @@
           54,
           51,
           73,
-          null,
+          75,
           null,
           null,
           null,
@@ -1175,7 +1175,7 @@
           80,
           42,
           71,
-          null,
+          42,
           null,
           null,
           null,
@@ -1213,7 +1213,7 @@
           86,
           63,
           71,
-          null,
+          83,
           null,
           null,
           null,
@@ -1259,12 +1259,12 @@
           "WC2": null,
           "FH": 2,
           "BB": null,
-          "TC": null
+          "TC": 6
         },
         "Nk River Plata": {
           "WC1": 2,
           "WC2": null,
-          "FH": null,
+          "FH": 6,
           "BB": null,
           "TC": null
         },
@@ -1273,7 +1273,7 @@
           "WC2": null,
           "FH": 2,
           "BB": null,
-          "TC": null
+          "TC": 6
         },
         "Nk Shogx": {
           "WC1": null,
@@ -1287,7 +1287,7 @@
           "WC2": null,
           "FH": null,
           "BB": null,
-          "TC": null
+          "TC": 6
         }
       }
     }
