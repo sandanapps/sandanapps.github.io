@@ -49919,7 +49919,7 @@
   {
     "category": "pokemon",
     "date": "2026-09-08",
-    "note": "Maschiff and shiny Flamigo will be released at the start of Mega Squads.",
+    "note": "Maschiff and shiny Flamigo were released at the start of Mega Squads.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_8th",
     "entries": [
       {
@@ -49949,7 +49949,7 @@
   {
     "category": "shiny",
     "date": "2026-09-08",
-    "note": "Maschiff and shiny Flamigo will be released at the start of Mega Squads.",
+    "note": "Maschiff and shiny Flamigo were released at the start of Mega Squads.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_8th",
     "entries": [
       {
@@ -50083,6 +50083,106 @@
         "shadow": false,
         "isShiny": true,
         "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-09-29",
+    "note": "Shiny Applin will be released at the start of Harvest Festival 2026.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_29th",
+    "entries": [
+      {
+        "name": "Applin",
+        "types": [
+          "Grass",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Applin_shiny.png"
+      },
+      {
+        "name": "Flapple",
+        "types": [
+          "Grass",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Flapple_shiny.png"
+      },
+      {
+        "name": "Appletun",
+        "types": [
+          "Grass",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Appletun_shiny.png"
+      },
+      {
+        "name": "Dipplin",
+        "types": [
+          "Grass",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Dipplin_shiny.png"
+      },
+      {
+        "name": "Hydrapple",
+        "types": [
+          "Grass",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Hydrapple_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-10-02",
+    "note": "Shiny Shroodle will be released at the start of Harvest Festival 2026: Taken Over.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_2nd",
+    "entries": [
+      {
+        "name": "Shroodle",
+        "types": [
+          "Poison",
+          "Normal"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Shroodle_shiny.png"
+      },
+      {
+        "name": "Grafaiai",
+        "types": [
+          "Poison",
+          "Normal"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Grafaiai_shiny.png"
       }
     ]
   }
