@@ -49967,6 +49967,26 @@
     ]
   },
   {
+    "category": "shadow",
+    "date": "2026-09-09",
+    "note": "Shiny Shadow Quagsire was released.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Shadow_Pok%C3%A9mon_by_release_date#September_9th%2C_2026",
+    "entries": [
+      {
+        "name": "Quagsire",
+        "types": [
+          "Water",
+          "Ground"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Quagsire_shiny.png"
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-09-12",
     "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu will be released at the start of the PokéXciting! cross-region GO Stamp Rally.",
@@ -50151,6 +50171,224 @@
         "shadow": false,
         "isShiny": true,
         "sprite": "data/sprites/Hydrapple_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "shadow",
+    "date": "2026-10-02",
+    "note": "These Shadow Pokémon will be released at the start of Harvest Festival: Taken Over. <!--",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Shadow_Pok%C3%A9mon_by_release_date#October_2nd%2C_2026",
+    "entries": [
+      {
+        "name": "Zekrom",
+        "types": [
+          "Dragon",
+          "Electric"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Zekrom.png"
+      },
+      {
+        "name": "Pancham",
+        "types": [
+          "Fighting"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Pancham.png"
+      },
+      {
+        "name": "Pangoro",
+        "types": [
+          "Fighting",
+          "Dark"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Pangoro.png"
+      },
+      {
+        "name": "Fomantis",
+        "types": [
+          "Grass"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Fomantis.png"
+      },
+      {
+        "name": "Lurantis",
+        "types": [
+          "Grass"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Lurantis.png"
+      },
+      {
+        "name": "Wimpod",
+        "types": [
+          "Bug",
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Wimpod.png"
+      },
+      {
+        "name": "Golisopod",
+        "types": [
+          "Bug",
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Golisopod.png"
+      },
+      {
+        "name": "Sandygast",
+        "types": [
+          "Ghost",
+          "Ground"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Sandygast.png"
+      },
+      {
+        "name": "Palossand",
+        "types": [
+          "Ghost",
+          "Ground"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": false,
+        "sprite": "data/sprites/Palossand.png"
+      },
+      {
+        "name": "Zekrom",
+        "types": [
+          "Dragon",
+          "Electric"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Zekrom_shiny.png"
+      },
+      {
+        "name": "Pancham",
+        "types": [
+          "Fighting"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Pancham_shiny.png"
+      },
+      {
+        "name": "Pangoro",
+        "types": [
+          "Fighting",
+          "Dark"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Pangoro_shiny.png"
+      },
+      {
+        "name": "Fomantis",
+        "types": [
+          "Grass"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Fomantis_shiny.png"
+      },
+      {
+        "name": "Lurantis",
+        "types": [
+          "Grass"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Lurantis_shiny.png"
+      },
+      {
+        "name": "Wimpod",
+        "types": [
+          "Bug",
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Wimpod_shiny.png"
+      },
+      {
+        "name": "Golisopod",
+        "types": [
+          "Bug",
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Golisopod_shiny.png"
+      },
+      {
+        "name": "Sandygast",
+        "types": [
+          "Ghost",
+          "Ground"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Sandygast_shiny.png"
+      },
+      {
+        "name": "Palossand",
+        "types": [
+          "Ghost",
+          "Ground"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Palossand_shiny.png"
       }
     ]
   },
