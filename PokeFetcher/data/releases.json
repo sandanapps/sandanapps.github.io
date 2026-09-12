@@ -50109,7 +50109,7 @@
   {
     "category": "shiny",
     "date": "2026-09-29",
-    "note": "Shiny Applin will be released at the start of Harvest Festival 2026.",
+    "note": "Shiny Applin will be released at the start of Harvest Festival: Applin Picking.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#September_29th",
     "entries": [
       {
@@ -50395,7 +50395,7 @@
   {
     "category": "shiny",
     "date": "2026-10-02",
-    "note": "Shiny Shroodle will be released at the start of Harvest Festival 2026: Taken Over.",
+    "note": "Shiny Shroodle will be released at the start of Harvest Festival: Taken Over",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_2nd",
     "entries": [
       {
@@ -50425,9 +50425,28 @@
     ]
   },
   {
+    "category": "shiny",
+    "date": "2026-10-03",
+    "note": "Shiny Gigantamax Cinderace was released at the start of Gigantamax Cinderace Max Battle Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_3rd",
+    "entries": [
+      {
+        "name": "Cinderace",
+        "types": [
+          "Fire"
+        ],
+        "costume": null,
+        "form": "gigantamax",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      }
+    ]
+  },
+  {
     "category": "pokemon",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai.",
+    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
@@ -50459,7 +50478,7 @@
   {
     "category": "shiny",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai.",
+    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
