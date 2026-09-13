@@ -49989,7 +49989,7 @@
   {
     "category": "events",
     "date": "2026-09-12",
-    "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu will be released at the start of the PokéXciting! cross-region GO Stamp Rally.",
+    "note": "Turquoise, Pink, Blue and Red PokéXciting! Pikachu were released at the start of the PokéXciting! cross-region GO Stamp Rally.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#September_12th%2C_2026",
     "entries": [
       {
@@ -50063,6 +50063,94 @@
         "shadow": false,
         "isShiny": true,
         "sprite": "data/sprites/Pikachu_PokéXciting_red_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "events",
+    "date": "2026-09-16",
+    "note": "Friede's goggles Charmander will be released at the start of Pokémon Horizons: The Series Celebration Event 2026.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#September_16th%2C_2026",
+    "entries": [
+      {
+        "name": "Charmander",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Charmander_horizons.png"
+      },
+      {
+        "name": "Charmeleon",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Charmeleon_horizons.png"
+      },
+      {
+        "name": "Charizard",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Charizard_horizons.png"
+      },
+      {
+        "name": "Charmander",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Charmander_horizons_shiny.png"
+      },
+      {
+        "name": "Charmeleon",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Charmeleon_horizons_shiny.png"
+      },
+      {
+        "name": "Charizard",
+        "costume": "horizons",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Charizard_horizons_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "events",
+    "date": "2026-09-18",
+    "note": "Orange hanbok Pikachu will be released at the start of Pikachu's Autumn Excursion 2026.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#September_18th%2C_2026",
+    "entries": [
+      {
+        "name": "Pikachu",
+        "costume": "female orange hanbok",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_female_orange_hanbok.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "female orange hanbok",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_female_orange_hanbok_shiny.png"
       }
     ]
   },
