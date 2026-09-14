@@ -140,8 +140,43 @@ main {
   margin: 0.5rem 0 1.5rem;
 }
 
+.upcoming-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 0.6rem;
+  user-select: none;
+}
+
+.upcoming-header:hover .upcoming-arrow {
+  color: var(--accent);
+}
+
+.upcoming-toggle {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.upcoming-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.upcoming.collapsed .upcoming-list {
+  display: none;
+}
+
 .upcoming h2 {
-  margin: 0 0 0.6rem;
+  margin: 0;
   font-size: 1rem;
   color: var(--future);
 }

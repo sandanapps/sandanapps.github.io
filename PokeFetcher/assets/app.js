@@ -126,6 +126,11 @@
     return state.data
       .filter((e) => isAll || e.category === state.category)
       .filter((e) => !isAll || e.date >= recentCutoff)
+      .filter((e) => {
+        // In "Pregled" (all) view, exclude future events — they are shown only in upcoming section
+        if (isAll && e.date > todayStr) return false;
+        return true;
+      })
       .filter((e) => isAll || state.year === "all" || e.date.startsWith(state.year))
       .filter((e) => {
         if (!search) return true;
@@ -160,7 +165,28 @@
       return;
     }
     container.style.display = "";
-    container.appendChild(el("h2", { text: "Nadolazeći release-i" }));
+
+    const header = el("div", { class: "upcoming-header" });
+    const toggle = el("button", {
+      class: "upcoming-toggle",
+      "aria-label": "Collapse upcoming releases",
+    });
+    const arrow = el("span", { class: "upcoming-arrow" });
+    arrow.textContent = "▾";
+    toggle.appendChild(arrow);
+    const heading = el("h2", { text: "Nadolazeći release-i" });
+    header.appendChild(toggle);
+    header.appendChild(heading);
+
+    header.addEventListener("click", () => {
+      const list = container.querySelector(".upcoming-list");
+      const isCollapsed = container.classList.toggle("collapsed");
+      arrow.textContent = isCollapsed ? "▸" : "▾";
+      toggle.setAttribute("aria-label", isCollapsed ? "Expand upcoming releases" : "Collapse upcoming releases");
+    });
+
+    container.appendChild(header);
+
     const list = el(
       "div",
       { class: "upcoming-list" },
@@ -195,7 +221,7 @@
       main.appendChild(
         el("p", {
           class: "timeline-hint",
-          text: `Pregled zadnjih ${RECENT_DAYS} dana i svih budućih release-a iz svih kategorija. Odaberi kategoriju gore za punu povijest.`,
+          text: `Pregled zadnjih ${RECENT_DAYS} dana iz svih kategorija. Budući release-i su prikazani u Nadolazeći sekciji iznad. Odaberi kategoriju gore za punu povijest.`,
         })
       );
     }
