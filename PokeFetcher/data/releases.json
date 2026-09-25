@@ -50532,6 +50532,38 @@
     ]
   },
   {
+    "category": "pokemon",
+    "date": "2026-10-13",
+    "note": "Bramblin will be released at the start of Fall Marathon: Buddy Trek.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_13th",
+    "entries": [
+      {
+        "name": "Bramblin",
+        "types": [
+          "Grass",
+          "Ghost"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Bramblin.png"
+      },
+      {
+        "name": "Brambleghast",
+        "types": [
+          "Grass",
+          "Ghost"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Brambleghast.png"
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-11-06",
     "note": "Modern jacket Machamp will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
