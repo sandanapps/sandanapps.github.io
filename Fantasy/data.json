@@ -26,7 +26,7 @@
           "initials": "MK"
         },
         {
-          "name": "Nk Shogx",
+          "name": "Nk Calvados",
           "color": "#06b6d4",
           "initials": "SHG"
         },
@@ -203,7 +203,7 @@
           null,
           null
         ],
-        "Nk Shogx": [
+        "Nk Calvados": [
           null,
           null,
           null,
@@ -285,7 +285,7 @@
         "Inter Ducks": 1565,
         "Nk River Plata": 1605,
         "Nk Martinkovac": 1589,
-        "Nk Shogx": 1341,
+        "Nk Calvados": 1341,
         "NK Poderana Štucna": 1614
       }
     },
@@ -319,7 +319,7 @@
           "initials": "NSK"
         },
         {
-          "name": "Nk Shogx",
+          "name": "Nk Calvados",
           "color": "#06b6d4",
           "initials": "SHG"
         },
@@ -534,7 +534,7 @@
           44,
           37
         ],
-        "Nk Shogx": [
+        "Nk Calvados": [
           59,
           41,
           51,
@@ -642,7 +642,7 @@
           "initials": "NSK"
         },
         {
-          "name": "Nk Shogx",
+          "name": "Nk Calvados",
           "color": "#06b6d4",
           "initials": "SHG"
         }
@@ -661,7 +661,7 @@
             },
             {
               "team1": "Inter Ducks",
-              "team2": "Nk Shogx"
+              "team2": "Nk Calvados"
             },
             {
               "team1": "Nk Martinkovac",
@@ -671,7 +671,7 @@
           [
             {
               "team1": "NK Busen",
-              "team2": "Nk Shogx"
+              "team2": "Nk Calvados"
             },
             {
               "team1": "Nk River Plata",
@@ -883,7 +883,7 @@
           38,
           53
         ],
-        "Nk Shogx": [
+        "Nk Calvados": [
           34,
           26,
           45,
@@ -958,7 +958,7 @@
           "BB": null,
           "TC": null
         },
-        "Nk Shogx": {
+        "Nk Calvados": {
           "WC1": null,
           "WC2": null,
           "FH": null,
@@ -992,7 +992,7 @@
           "initials": "MK"
         },
         {
-          "name": "Nk Shogx",
+          "name": "Nk Calvados",
           "color": "#06b6d4",
           "initials": "SHG"
         },
@@ -1169,7 +1169,7 @@
           null,
           null
         ],
-        "Nk Shogx": [
+        "Nk Calvados": [
           64,
           16,
           80,
@@ -1275,7 +1275,7 @@
           "BB": null,
           "TC": 6
         },
-        "Nk Shogx": {
+        "Nk Calvados": {
           "WC1": null,
           "WC2": null,
           "FH": null,
