@@ -50564,6 +50564,38 @@
     ]
   },
   {
+    "category": "pokemon",
+    "date": "2026-10-19",
+    "note": "Minior will be released.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_19th",
+    "entries": [
+      {
+        "name": "Minior",
+        "types": [
+          "Rock",
+          "Flying"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      },
+      {
+        "name": "Minior",
+        "types": [
+          "Rock",
+          "Flying"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-11-06",
     "note": "Modern jacket Machamp will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
