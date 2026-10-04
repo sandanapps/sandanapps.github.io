@@ -50505,7 +50505,7 @@
   {
     "category": "shiny",
     "date": "2026-10-02",
-    "note": "Shiny Shroodle will be released at the start of Harvest Festival: Taken Over",
+    "note": "Shiny Shroodle was released at the start of Harvest Festival: Taken Over.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_2nd",
     "entries": [
       {
@@ -50550,6 +50550,32 @@
         "shadow": false,
         "isShiny": true,
         "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "events",
+    "date": "2026-10-04",
+    "note": "Astronaut Pikachu was released at the start of World Space Week 2026.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#October_4th%2C_2026",
+    "entries": [
+      {
+        "name": "Pikachu",
+        "costume": "astronaut",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_astronaut.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "astronaut",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_astronaut_shiny.png"
       }
     ]
   },
@@ -50601,7 +50627,7 @@
         "form": null,
         "shadow": false,
         "isShiny": false,
-        "sprite": null
+        "sprite": "data/sprites/Minior.png"
       },
       {
         "name": "Minior",
