@@ -50644,6 +50644,36 @@
     ]
   },
   {
+    "category": "shiny",
+    "date": "2026-11-01",
+    "note": "Shiny Greavard will be released at the start of Halloween 2026 Part 2.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_1st",
+    "entries": [
+      {
+        "name": "Greavard",
+        "types": [
+          "Ghost"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Greavard_shiny.png"
+      },
+      {
+        "name": "Houndstone",
+        "types": [
+          "Ghost"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Houndstone_shiny.png"
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-11-06",
     "note": "Modern jacket Machamp will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
@@ -50672,7 +50702,7 @@
   {
     "category": "pokemon",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
+    "note": "Hisuian Sliggoo and Gigantamax Duraludon will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
@@ -50698,13 +50728,25 @@
         "shadow": false,
         "isShiny": false,
         "sprite": "data/sprites/Goodra_hisuian.png"
+      },
+      {
+        "name": "Duraludon",
+        "types": [
+          "Steel",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": "gigantamax",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
       }
     ]
   },
   {
     "category": "shiny",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
+    "note": "Hisuian Sliggoo and Gigantamax Duraludon will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
@@ -50730,6 +50772,18 @@
         "shadow": false,
         "isShiny": true,
         "sprite": "data/sprites/Goodra_hisuian_shiny.png"
+      },
+      {
+        "name": "Duraludon",
+        "types": [
+          "Steel",
+          "Dragon"
+        ],
+        "costume": null,
+        "form": "gigantamax",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
       }
     ]
   }
