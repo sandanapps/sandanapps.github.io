@@ -50582,7 +50582,7 @@
   {
     "category": "pokemon",
     "date": "2026-10-13",
-    "note": "Bramblin will be released at the start of Fall Marathon: Buddy Trek.",
+    "note": "Bramblin was released at the start of Fall Marathon: Buddy Trek.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_13th",
     "entries": [
       {
@@ -50639,6 +50639,46 @@
         "form": null,
         "shadow": false,
         "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "pokemon",
+    "date": "2026-10-31",
+    "note": "Mega Chandelure will be released at the start of Chandelure Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_31st",
+    "entries": [
+      {
+        "name": "Chandelure",
+        "types": [
+          "Ghost",
+          "Fire"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-10-31",
+    "note": "Mega Chandelure will be released at the start of Chandelure Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#October_31st",
+    "entries": [
+      {
+        "name": "Chandelure",
+        "types": [
+          "Ghost",
+          "Fire"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": true,
         "sprite": null
       }
     ]
