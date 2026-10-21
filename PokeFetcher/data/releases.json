@@ -50714,6 +50714,25 @@
     ]
   },
   {
+    "category": "shadow",
+    "date": "2026-11-04",
+    "note": "Shiny Shadow Tornadus will be released. <!--",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Shadow_Pok%C3%A9mon_by_release_date#November_4th%2C_2026",
+    "entries": [
+      {
+        "name": "Tornadus",
+        "types": [
+          "Flying"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Tornadus_shiny.png"
+      }
+    ]
+  },
+  {
     "category": "events",
     "date": "2026-11-06",
     "note": "Modern jacket Machamp will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
