@@ -50644,6 +50644,158 @@
     ]
   },
   {
+    "category": "events",
+    "date": "2026-10-27",
+    "note": "Halloween 2026 Pikachu. Top Hat Zubat, and Bow Sinistea was released at the start of Halloween 2026 Part 1.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Event_Pok%C3%A9mon_by_release_date#October_27th%2C_2026",
+    "entries": [
+      {
+        "name": "Pikachu",
+        "costume": "halloween 2026",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pikachu_halloween_2026.png"
+      },
+      {
+        "name": "Zubat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Zubat_top_hat.png"
+      },
+      {
+        "name": "Golbat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Golbat_top_hat.png"
+      },
+      {
+        "name": "Crobat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Crobat_top_hat.png"
+      },
+      {
+        "name": "Sinistea",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Sinistea_bow.png"
+      },
+      {
+        "name": "Sinistea",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Sinistea_antique_bow.png"
+      },
+      {
+        "name": "Polteageist",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Polteageist_bow.png"
+      },
+      {
+        "name": "Polteageist",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Polteageist_antique_bow.png"
+      },
+      {
+        "name": "Pikachu",
+        "costume": "halloween 2026",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pikachu_halloween_2026_shiny.png"
+      },
+      {
+        "name": "Zubat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Zubat_top_hat_shiny.png"
+      },
+      {
+        "name": "Golbat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Golbat_top_hat_shiny.png"
+      },
+      {
+        "name": "Crobat",
+        "costume": "top hat",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Crobat_top_hat_shiny.png"
+      },
+      {
+        "name": "Sinistea",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Sinistea_bow_shiny.png"
+      },
+      {
+        "name": "Sinistea",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Sinistea_antique_bow_shiny.png"
+      },
+      {
+        "name": "Polteageist",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Polteageist_bow_shiny.png"
+      },
+      {
+        "name": "Polteageist",
+        "costume": "bow",
+        "types": [],
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Polteageist_antique_bow_shiny.png"
+      }
+    ]
+  },
+  {
     "category": "pokemon",
     "date": "2026-10-31",
     "note": "Mega Chandelure will be released at the start of Chandelure Super Mega Raid Day.",
