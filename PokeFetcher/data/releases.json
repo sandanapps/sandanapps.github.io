@@ -50868,9 +50868,32 @@
   {
     "category": "shadow",
     "date": "2026-11-04",
-    "note": "Shiny Shadow Tornadus will be released. <!--",
+    "note": "Shiny Shadow Prinplup and Tornadus were released.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Shadow_Pok%C3%A9mon_by_release_date#November_4th%2C_2026",
     "entries": [
+      {
+        "name": "Prinplup",
+        "types": [
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Prinplup_shiny.png"
+      },
+      {
+        "name": "Empoleon",
+        "types": [
+          "Water",
+          "Steel"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": true,
+        "isShiny": true,
+        "sprite": "data/sprites/Empoleon_shiny.png"
+      },
       {
         "name": "Tornadus",
         "types": [
