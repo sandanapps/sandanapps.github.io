@@ -353,3 +353,169 @@ footer a { color: var(--accent-2); }
   .event-row { flex-direction: column; gap: 0.4rem; }
   .event-date { flex: none; }
 }
+
+.page-nav {
+  margin-top: 0.5rem;
+}
+
+.page-nav a {
+  color: var(--accent-2);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.page-nav a:hover {
+  text-decoration: underline;
+}
+
+.quest-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-2);
+  margin-bottom: 0.5rem;
+}
+
+.quest-stop-image {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.quest-stop {
+  flex: 1 1 180px;
+  font-weight: 700;
+}
+
+.quest-task {
+  flex: 1 1 160px;
+  color: var(--text-dim);
+}
+
+.quest-reward {
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.quest-reward-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Pokémon reward icons are pre-cropped to their actual sprite content at
+   fetch time (see scripts/fetch_quests.py), so they can use the same box
+   as item icons without any extra zoom/crop here. */
+.quest-reward-icon-pokemon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.quest-coords {
+  flex: 0 0 170px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .quest-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+}
+
+.multiselect {
+  position: relative;
+}
+
+.multiselect-toggle {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.multiselect-toggle:hover {
+  border-color: var(--accent-2);
+}
+
+.multiselect-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  min-width: 240px;
+  max-width: 320px;
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.multiselect-search {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  box-sizing: border-box;
+}
+
+.multiselect-list {
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.3rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.multiselect-option:hover {
+  background: var(--bg-panel);
+}
+
+.multiselect-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.multiselect-clear {
+  background: none;
+  border: none;
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.multiselect-clear:hover {
+  text-decoration: underline;
+}
