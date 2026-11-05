@@ -1,0 +1,50 @@
+name: Update quest data
+
+on:
+  schedule:
+    # 05:07 and 11:07 UTC = ~06:07 and ~12:07 CET (Croatia winter time).
+    # During CEST (summer, UTC+2) this runs ~07:07 and ~13:07 local time instead,
+    # since GitHub Actions cron has no DST awareness and uses a single fixed UTC time.
+    - cron: "7 5,11 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install Pillow
+
+      - name: Run quest fetcher
+        working-directory: PokeFetcher
+        run: python3 scripts/fetch_quests.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add PokeFetcher/data/quests.json PokeFetcher/data/sprites
+          if git diff --cached --quiet; then
+            echo "No changes to quest data."
+            exit 0
+          fi
+          git commit -m "chore: update quest data"
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main && git push && exit 0
+            echo "Push rejected, retrying ($i)..."
+            sleep 5
+          done
+          echo "Failed to push after retries."
+          exit 1
