@@ -2,10 +2,15 @@ name: Update quest data
 
 on:
   schedule:
-    # 05:07 and 11:07 UTC = ~06:07 and ~12:07 CET (Croatia winter time).
-    # During CEST (summer, UTC+2) this runs ~07:07 and ~13:07 local time instead,
-    # since GitHub Actions cron has no DST awareness and uses a single fixed UTC time.
-    - cron: "7 5,11 * * *"
+    # GitHub Actions' scheduler on this repo has been observed running "0 0 * * *"
+    # jobs ~4-5h late (e.g. a job scheduled for 00:00 UTC actually firing around
+    # 04:00-05:15 UTC most days) — scheduled cron times are best-effort, not exact.
+    # To land close to ~06:00 and ~12:00 CET (Croatia winter time) in practice, the
+    # cron below is set ~4.5h earlier than those targets: 00:23 and 06:23 UTC.
+    # During CEST (summer, UTC+2) actual runs will land roughly an hour later local
+    # time. Actual run times will still vary day to day — check the Actions tab if
+    # you need the exact last-run time.
+    - cron: "23 0,6 * * *"
   workflow_dispatch: {}
 
 permissions:
