@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PokeFetcher — Questovi (Rijeka)</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
 </head>
 <body>
 <header>
@@ -15,7 +17,9 @@
 
 <main>
   <div class="controls" id="quest-filters"></div>
+  <div class="view-toggle" id="view-toggle"></div>
   <div id="quest-meta" class="timeline-hint"></div>
+  <div id="quest-map"></div>
   <div id="quest-list"></div>
 </main>
 
