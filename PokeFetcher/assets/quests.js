@@ -19,6 +19,7 @@
       for (const [k, v] of Object.entries(attrs)) {
         if (k === "class") node.className = v;
         else if (k === "text") node.textContent = v;
+        else if (k === "html") node.innerHTML = v;
         else node.setAttribute(k, v);
       }
     }
@@ -36,6 +37,32 @@
     return rewardEl;
   }
 
+  const COPY_ICON_SVG =
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>';
+  const CHECK_ICON_SVG =
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+  function buildCopyCoordsButton(lat, lon, className, opts) {
+    const iconOnly = opts && opts.iconOnly;
+    const btn = el("button", {
+      type: "button",
+      class: className,
+      title: "Copy coords",
+      "aria-label": "Copy coords",
+      html: iconOnly ? COPY_ICON_SVG : `${COPY_ICON_SVG} Copy coords`,
+    });
+    btn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const text = `${lat}, ${lon}`;
+      navigator.clipboard.writeText(text).then(() => {
+        const restoreHtml = btn.innerHTML;
+        btn.innerHTML = iconOnly ? CHECK_ICON_SVG : `${CHECK_ICON_SVG} Kopirano!`;
+        setTimeout(() => (btn.innerHTML = restoreHtml), 1500);
+      });
+    });
+    return btn;
+  }
+
   function buildQuestRow(q) {
     const row = el("div", { class: "quest-row" });
     if (q.pokestop_image_url) {
@@ -44,7 +71,12 @@
     row.appendChild(el("div", { class: "quest-stop", text: q.pokestop_name }));
     row.appendChild(el("div", { class: "quest-task", text: q.task }));
     row.appendChild(buildRewardRow(q));
-    row.appendChild(el("div", { class: "quest-coords", text: `${q.lat}, ${q.lon}` }));
+
+    const coordsWrap = el("div", { class: "quest-coords" });
+    coordsWrap.appendChild(el("span", { text: `${q.lat}, ${q.lon}` }));
+    coordsWrap.appendChild(buildCopyCoordsButton(q.lat, q.lon, "copy-coords-btn", { iconOnly: true }));
+    row.appendChild(coordsWrap);
+
     return row;
   }
 
@@ -211,16 +243,7 @@
     });
     actions.appendChild(mapsLink);
 
-    const copyBtn = el("button", { type: "button", class: "popup-btn-secondary", text: "Copy coords" });
-    copyBtn.addEventListener("click", () => {
-      const text = `${props.lat}, ${props.lon}`;
-      navigator.clipboard.writeText(text).then(() => {
-        const original = copyBtn.textContent;
-        copyBtn.textContent = "Kopirano!";
-        setTimeout(() => (copyBtn.textContent = original), 1500);
-      });
-    });
-    actions.appendChild(copyBtn);
+    actions.appendChild(buildCopyCoordsButton(props.lat, props.lon, "popup-btn-secondary"));
 
     container.appendChild(actions);
     return container;

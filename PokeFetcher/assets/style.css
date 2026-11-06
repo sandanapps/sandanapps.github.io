@@ -423,10 +423,32 @@ footer a { color: var(--accent-2); }
 }
 
 .quest-coords {
-  flex: 0 0 170px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-variant-numeric: tabular-nums;
   color: var(--text-dim);
   font-size: 0.85rem;
+}
+
+.copy-coords-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-panel-2);
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.copy-coords-btn:hover {
+  background: var(--accent-2);
+  color: #fff;
 }
 
 @media (max-width: 600px) {
@@ -594,7 +616,10 @@ footer a { color: var(--accent-2); }
 
 .popup-btn-primary,
 .popup-btn-secondary {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   text-align: center;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
