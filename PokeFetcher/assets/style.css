@@ -519,3 +519,136 @@ footer a { color: var(--accent-2); }
 .multiselect-clear:hover {
   text-decoration: underline;
 }
+
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+
+.export-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.export-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  border-color: var(--accent-2);
+  color: var(--text);
+}
+
+#quest-map {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.quest-popup {
+  min-width: 200px;
+}
+
+.popup-title {
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.popup-task {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.popup-reward-label {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.popup-reward-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.popup-btn-primary,
+.popup-btn-secondary {
+  display: block;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.popup-btn-primary {
+  background: #e53e3e;
+  color: #fff;
+}
+
+.popup-btn-primary:hover {
+  background: #c53030;
+}
+
+.popup-btn-secondary {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.popup-btn-secondary:hover {
+  border-color: var(--accent-2);
+}
+
+.maplibregl-popup-content {
+  background: var(--bg-panel-2);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 0.9rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.maplibregl-popup-close-button {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+}
+
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: var(--bg-panel-2);
+}
+
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: var(--bg-panel-2);
+}
+
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: var(--bg-panel-2);
+}
+
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: var(--bg-panel-2);
+}
