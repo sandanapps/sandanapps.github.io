@@ -50936,7 +50936,7 @@
   {
     "category": "pokemon",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo and Gigantamax Duraludon will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
+    "note": "Hisuian Sliggoo and Gigantamax Duraludon were released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
@@ -50980,7 +50980,7 @@
   {
     "category": "shiny",
     "date": "2026-11-06",
-    "note": "Hisuian Sliggoo and Gigantamax Duraludon will be released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
+    "note": "Hisuian Sliggoo and Gigantamax Duraludon were released at the start of Pokémon GO Wild Area 2026: Sendai • Tohoku.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_6th",
     "entries": [
       {
@@ -51015,6 +51015,46 @@
         ],
         "costume": null,
         "form": "gigantamax",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "pokemon",
+    "date": "2026-11-28",
+    "note": "Mega Clefable will be released at the start of Clefable Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_28th",
+    "entries": [
+      {
+        "name": "Clefable",
+        "types": [
+          "Fairy",
+          "Flying"
+        ],
+        "costume": null,
+        "form": "mega",
+        "shadow": false,
+        "isShiny": false,
+        "sprite": null
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-11-28",
+    "note": "Mega Clefable will be released at the start of Clefable Super Mega Raid Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_28th",
+    "entries": [
+      {
+        "name": "Clefable",
+        "types": [
+          "Fairy",
+          "Flying"
+        ],
+        "costume": null,
+        "form": "mega",
         "shadow": false,
         "isShiny": true,
         "sprite": null
