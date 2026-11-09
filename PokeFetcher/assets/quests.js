@@ -5,6 +5,7 @@
 
   const state = {
     quests: [],
+    selectedRewardKinds: new Set(),
     selectedTasks: new Set(),
     selectedRewards: new Set(),
     view: "list",
@@ -82,10 +83,15 @@
 
   function buildMultiSelect(opts) {
     // opts: { label, values (sorted array of strings), selectedSet, onChange, withSearch }
+    // Returns { element, setValues(newValues) } — setValues lets a dynamic/cascading
+    // filter update the available options in place without closing the panel or
+    // resetting the search box, so dependent dropdowns can narrow live.
     const wrap = el("div", { class: "multiselect" });
     const toggle = el("button", { type: "button", class: "multiselect-toggle" });
     const panel = el("div", { class: "multiselect-panel" });
     panel.style.display = "none";
+
+    let currentValues = opts.values;
 
     function updateToggleLabel() {
       const n = opts.selectedSet.size;
@@ -98,7 +104,7 @@
     function renderOptions(filterText) {
       listEl.innerHTML = "";
       const needle = (filterText || "").trim().toLowerCase();
-      opts.values
+      currentValues
         .filter((v) => !needle || v.toLowerCase().includes(needle))
         .forEach((v) => {
           const id = `ms-${opts.label}-${v}`.replace(/\s+/g, "_");
@@ -151,15 +157,77 @@
 
     wrap.appendChild(toggle);
     wrap.appendChild(panel);
-    return wrap;
+
+    function setValues(newValues) {
+      currentValues = newValues;
+      renderOptions(searchInput ? searchInput.value : "");
+      updateToggleLabel();
+    }
+
+    return { element: wrap, setValues };
+  }
+
+  function questMatches(q, { kinds, tasks, rewards }) {
+    if (kinds.size && !kinds.has(q.reward_kind)) return false;
+    if (tasks.size && !tasks.has(q.task)) return false;
+    if (rewards.size && !rewards.has(q.reward_label)) return false;
+    return true;
+  }
+
+  const EMPTY_SET = new Set();
+
+  function distinctSorted(quests, key) {
+    return Array.from(new Set(quests.map((q) => q[key]))).sort((a, b) => a.localeCompare(b));
+  }
+
+  function pruneSelection(selectedSet, allowedValues) {
+    const allowed = new Set(allowedValues);
+    for (const v of Array.from(selectedSet)) {
+      if (!allowed.has(v)) selectedSet.delete(v);
+    }
+  }
+
+  const filterHandles = {};
+
+  function updateFilterOptions() {
+    if (!filterHandles.kind) return;
+
+    const availableKinds = distinctSorted(
+      state.quests.filter((q) =>
+        questMatches(q, { kinds: EMPTY_SET, tasks: state.selectedTasks, rewards: state.selectedRewards })
+      ),
+      "reward_kind"
+    );
+    const availableTasks = distinctSorted(
+      state.quests.filter((q) =>
+        questMatches(q, { kinds: state.selectedRewardKinds, tasks: EMPTY_SET, rewards: state.selectedRewards })
+      ),
+      "task"
+    );
+    const availableRewards = distinctSorted(
+      state.quests.filter((q) =>
+        questMatches(q, { kinds: state.selectedRewardKinds, tasks: state.selectedTasks, rewards: EMPTY_SET })
+      ),
+      "reward_label"
+    );
+
+    pruneSelection(state.selectedRewardKinds, availableKinds);
+    pruneSelection(state.selectedTasks, availableTasks);
+    pruneSelection(state.selectedRewards, availableRewards);
+
+    filterHandles.kind.setValues(availableKinds);
+    filterHandles.task.setValues(availableTasks);
+    filterHandles.reward.setValues(availableRewards);
   }
 
   function getFilteredQuests() {
-    return state.quests.filter((q) => {
-      if (state.selectedTasks.size && !state.selectedTasks.has(q.task)) return false;
-      if (state.selectedRewards.size && !state.selectedRewards.has(q.reward_label)) return false;
-      return true;
-    });
+    return state.quests.filter((q) =>
+      questMatches(q, {
+        kinds: state.selectedRewardKinds,
+        tasks: state.selectedTasks,
+        rewards: state.selectedRewards,
+      })
+    );
   }
 
   function renderList(filtered) {
@@ -397,6 +465,8 @@
   }
 
   function applyFilters() {
+    updateFilterOptions();
+
     const filtered = getFilteredQuests();
     const meta = document.getElementById("quest-meta");
     const metaBase = meta.dataset.base || "";
@@ -410,31 +480,39 @@
     const container = document.getElementById("quest-filters");
     container.innerHTML = "";
 
-    const taskValues = Array.from(new Set(state.quests.map((q) => q.task))).sort((a, b) =>
-      a.localeCompare(b)
-    );
-    const rewardValues = Array.from(new Set(state.quests.map((q) => q.reward_label))).sort((a, b) =>
-      a.localeCompare(b)
-    );
+    const rewardKindValues = distinctSorted(state.quests, "reward_kind");
+    const taskValues = distinctSorted(state.quests, "task");
+    const rewardValues = distinctSorted(state.quests, "reward_label");
 
-    container.appendChild(
-      buildMultiSelect({
-        label: "Quest type",
-        values: taskValues,
-        selectedSet: state.selectedTasks,
-        withSearch: true,
-        onChange: applyFilters,
-      })
-    );
-    container.appendChild(
-      buildMultiSelect({
-        label: "Reward",
-        values: rewardValues,
-        selectedSet: state.selectedRewards,
-        withSearch: true,
-        onChange: applyFilters,
-      })
-    );
+    const kindFilter = buildMultiSelect({
+      label: "Quest type",
+      values: rewardKindValues,
+      selectedSet: state.selectedRewardKinds,
+      withSearch: true,
+      onChange: applyFilters,
+    });
+    const taskFilter = buildMultiSelect({
+      label: "Quest",
+      values: taskValues,
+      selectedSet: state.selectedTasks,
+      withSearch: true,
+      onChange: applyFilters,
+    });
+    const rewardFilter = buildMultiSelect({
+      label: "Reward",
+      values: rewardValues,
+      selectedSet: state.selectedRewards,
+      withSearch: true,
+      onChange: applyFilters,
+    });
+
+    filterHandles.kind = kindFilter;
+    filterHandles.task = taskFilter;
+    filterHandles.reward = rewardFilter;
+
+    container.appendChild(kindFilter.element);
+    container.appendChild(taskFilter.element);
+    container.appendChild(rewardFilter.element);
     container.appendChild(buildExportControls());
   }
 
