@@ -453,6 +453,11 @@ footer a { color: var(--accent-2); }
 
 @media (max-width: 600px) {
   .quest-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+  /* .quest-stop/.quest-task/.quest-reward/.quest-coords use "flex: 1 1 <px>"
+     for their width in the normal row layout; in column layout that same
+     flex-basis is applied to height instead, creating huge empty vertical
+     gaps. Reset it here so column layout sizes rows by content. */
+  .quest-row > *:not(.quest-stop-image) { flex: 0 0 auto; width: 100%; }
 }
 
 .multiselect {
