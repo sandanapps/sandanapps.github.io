@@ -51023,6 +51023,26 @@
   },
   {
     "category": "pokemon",
+    "date": "2026-11-14",
+    "note": "Yellow Core Minior was released.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_14th",
+    "entries": [
+      {
+        "name": "Minior",
+        "types": [
+          "Rock",
+          "Flying"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Minior_yellow_core.png"
+      }
+    ]
+  },
+  {
+    "category": "pokemon",
     "date": "2026-11-28",
     "note": "Mega Clefable will be released at the start of Clefable Super Mega Raid Day.",
     "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#November_28th",
