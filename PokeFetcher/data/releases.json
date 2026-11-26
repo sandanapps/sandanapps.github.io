@@ -51080,5 +51080,62 @@
         "sprite": null
       }
     ]
+  },
+  {
+    "category": "pokemon",
+    "date": "2026-12-01",
+    "note": "Pyukumuku will be released at the start of Tropical Paradise.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#December_1st",
+    "entries": [
+      {
+        "name": "Pyukumuku",
+        "types": [
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": false,
+        "sprite": "data/sprites/Pyukumuku.png"
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-12-01",
+    "note": "Pyukumuku will be released at the start of Tropical Paradise.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#December_1st",
+    "entries": [
+      {
+        "name": "Pyukumuku",
+        "types": [
+          "Water"
+        ],
+        "costume": null,
+        "form": null,
+        "shadow": false,
+        "isShiny": true,
+        "sprite": "data/sprites/Pyukumuku_shiny.png"
+      }
+    ]
+  },
+  {
+    "category": "shiny",
+    "date": "2026-12-05",
+    "note": "Shiny Gigantamax Inteleon will be released at the start of Gigantamax Inteleon Max Battle Day.",
+    "sourceUrl": "https://pokemongo.fandom.com/wiki/List_of_Pok%C3%A9mon_forms_by_release_date/2026#December_5th",
+    "entries": [
+      {
+        "name": "Inteleon",
+        "types": [
+          "Water"
+        ],
+        "costume": null,
+        "form": "gigantamax",
+        "shadow": false,
+        "isShiny": true,
+        "sprite": null
+      }
+    ]
   }
 ]
